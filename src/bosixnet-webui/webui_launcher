@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Config file
+CONF_FILE="/etc/bosixnet/bosixnet-webui.conf"
+
+# ABSOLUTE path to the program binary
+FCGIPROGRAM="/usr/bin/bosixnet_webui"
+
+# ABSOLUTE path to the spawn-fcgi binary
+SPAWNFCGI="/usr/bin/spawn-fcgi"
+
+# TCP port to which to bind on localhost
+FCGIPORT=33169
+
+# If this script is run as root, switch to the specific user
+USERID=user
+GROUPID=user
+
+# Number of children to spawn
+FCGI_CHILDREN=1
+
+# Read settings from config file if it exists
+if [ -e "${CONF_FILE}" ]; then
+    . "${CONF_FILE}"
+fi
+
+
+# Launch program
+if test x${FCGI_CHILDREN} = x; then
+  FCGI_CHILDREN=5
+fi
+
+if test x${UID} = x0; then
+  EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -u ${USERID} -g ${GROUPID} -C ${FCGI_CHILDREN}"
+else
+  EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -C ${FCGI_CHILDREN}"
+fi
+
+# Clean the environment and set up a new one
+env - ${E} ${EX}
+

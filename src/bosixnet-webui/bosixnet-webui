@@ -1,0 +1,89 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          bosixnet-webui
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts bosixnet_webui
+# Description:       starts FastCGI program for generating /etc/hosts
+### END INIT INFO
+
+# Author: Boris Pek
+# Last updated: 2014-02-03
+
+DAEMON=/usr/lib/bosixnet/webui_launcher
+DAEMON_OPTS=
+NAME=bosixnet_webui
+DESC=bosixnet_webui
+SCRIPT=bosixnet-webui
+
+# Run level on system startup
+L=50
+
+case "$1" in
+                start)
+
+DAEMON_PID="$(pidof -x ${NAME})"
+if [ ! -z "${DAEMON_PID}" ]; then
+    echo "${NAME} is already running with PID: ${DAEMON_PID}"
+    exit 0
+fi
+
+echo -n "Starting ${DESC}: "
+${DAEMON} "${DAEMON_OPTS}" &
+echo "${NAME}."
+
+                ;;
+                stop)
+
+echo -n "Stopping ${DESC}: "
+killall -9 "${NAME}"
+echo "${NAME}."
+
+                ;;
+                restart|force-reload)
+
+echo -n "Restarting ${DESC}: "
+killall -9 "${NAME}"
+sleep 1
+${DAEMON} "${DAEMON_OPTS}" &
+echo "${NAME}."
+
+                ;;
+                status)
+
+DAEMON_PID="$(pidof -x ${NAME})"
+if [ ! -z "${DAEMON_PID}" ]; then
+    echo "${NAME} is already running with PID: ${DAEMON_PID}"
+else
+    echo "${NAME} is not running."
+fi
+
+                ;;
+                install)
+
+cp -f ${0} /etc/init.d/${SCRIPT}
+rm -f /etc/rc*.d/*${SCRIPT}*
+ln -sf /etc/init.d/${SCRIPT} /etc/rc2.d/S${L}${SCRIPT}
+ln -sf /etc/init.d/${SCRIPT} /etc/rc3.d/S${L}${SCRIPT}
+ln -sf /etc/init.d/${SCRIPT} /etc/rc4.d/S${L}${SCRIPT}
+ln -sf /etc/init.d/${SCRIPT} /etc/rc5.d/S${L}${SCRIPT}
+ln -sf /etc/init.d/${SCRIPT} /etc/rc6.d/K01${SCRIPT}
+
+                ;;
+                remove)
+
+rm -f /etc/rc*.d/*${SCRIPT}*
+rm -f /etc/init.d/${SCRIPT}
+
+                ;;
+                *)
+
+echo "Usage: {start|stop|restart|force-reload|status|install|remove}"
+exit 1
+
+                ;;
+esac
+

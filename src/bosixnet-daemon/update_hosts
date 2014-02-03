@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Config file
+CONF_FILE="/etc/bosixnet/bosixnet-daemon.conf"
+
+# Directory where generated host file is stored:
+LOG_DIR="/var/tmp/bosixnet/"
+
+# Default web-site URL
+URL="http://ipv6.example.com/bosixnet"
+
+# Read settings from config file if it exists
+if [ -e "${CONF_FILE}" ]; then
+    . "${CONF_FILE}"
+fi
+
+
+HOSTS="/etc/hosts"
+FILE="${LOG_DIR}/hosts"
+LINK="${URL}/hosts"
+
+CUR_INFO="$(cat ${FILE} | sed '/^$/d')"
+if [ -z "${CUR_INFO}" ]; then
+    echo "File ${FILE} does not exist."
+    echo "Trying to get data from ${LINK}..."
+    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | sed '/^$/d')"
+    if [ -z "${CUR_INFO}" ]; then
+        echo "Attempt to get data from ${LINK} failed."
+        exit 1
+    else
+        echo "Data from ${LINK} have been received successfully."
+    fi
+fi
+
+cp -f "${HOSTS}" "${HOSTS}.backup"
+cat "${HOSTS}.backup" | grep -v '^2001:' | tee "${HOSTS}" > /dev/null
+echo "${CUR_INFO}" | tee -a "${HOSTS}" > /dev/null
+
+echo "There are such data in ${HOSTS} now:"
+cat "${HOSTS}"
+

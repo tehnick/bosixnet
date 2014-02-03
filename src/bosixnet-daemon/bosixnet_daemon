@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Config file
+CONF_FILE="/etc/bosixnet/bosixnet-daemon.conf"
+
+# Period of updating IPv6 address and /etc/hosts [seconds]:
+UPD_PERIOD=300
+
+# Directory with auxiliary scripts:
+DIR_UTIL="/usr/lib/bosixnet"
+
+# Read settings from config file if it exists
+if [ -e "${CONF_FILE}" ]; then
+    . "${CONF_FILE}"
+fi
+
+
+# Check command line options
+if [ "${1}" = "-h" -o "${1}" = "--help" ]; then
+    echo "Usage: bosixnet-daemon [options]
+
+This shell script periodically sends information about current IPv6 address to
+remote server and updates local /etc/hosts based on data received from that
+remote server. It is expected that bosixnet-webui is launched on remote server.
+
+Generic options:
+  -h, --help    show help
+  -v, --vesion  show vesion
+
+Settings are in config file: ${CONF_FILE}"
+    exit 0
+elif [ "${1}" = "-v" -o "${1}" = "--version" ]; then
+    echo "Last updated: 2014-02-03"
+    exit 0
+fi
+
+# Infinite cycle for periodical updates
+while [ 1 ]; do
+    "${DIR_UTIL}/update_address" >/dev/null
+    "${DIR_UTIL}/update_hosts" >/dev/null
+    sleep ${UPD_PERIOD}
+done
+

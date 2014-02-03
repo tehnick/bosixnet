@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Config file
+CONF_FILE="/etc/bosixnet/bosixnet-daemon.conf"
+
+# Default host name
+HOST_NAME="$(uname -n)"
+
+# Default web-site URL
+URL="http://ipv6.example.com/bosixnet"
+
+# Read settings from config file if it exists
+if [ -e "${CONF_FILE}" ]; then
+    . "${CONF_FILE}"
+fi
+
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+IPv6_INFO="$(ifconfig | grep 'inet6 addr:' | grep 'Scope:Global')"
+IPv6_CUR=$(echo "${IPv6_INFO}" | sed -e "s|^.*inet6 addr:\ \(.*\)/[0-9]*\ Scope:Global$|\1|" | tail -n1)
+
+if [ ! -z "${IPv6_CUR}" ]; then
+    IPv6_OLD="$(curl ${URL}/${HOST_NAME} 2>/dev/null)"
+    if [ "${IPv6_OLD}" != "${IPv6_CUR}" ]; then
+        curl "${URL}/${HOST_NAME}?update=${IPv6_CUR}" 2>/dev/null >/dev/null
+    fi
+fi
+

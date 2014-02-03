@@ -1,0 +1,28 @@
+*** Build dependencies ***
+gcc (>= 4.8) or clang (>= 3.2)
+libfcgi-dev (>= 2.4)
+cmake (>= 2.8)
+
+*** Runtime dependencies ***
+libfcgi -- Shared library of FastCGI
+spawn-fcgi -- A fastcgi process spawner
+curl -- command line tool for transferring data with URL syntax
+sed -- The GNU sed stream editor
+
+*** Recommended programs ***
+miredo -- Teredo IPv6 tunneling through NATs
+gogoc -- Client to connect to IPv6 tunnel brokers
+
+You do not need any of these programs if your Internet provider gives you
+direct access to IPv6 network. Unfortunately this is too rare situation now.
+
+*** Build ***
+mkdir -p builddir
+cd builddir
+cmake -DCMAKE_BUILD_TYPE=Release  -DCMAKE_INSTALL_PREFIX=/usr ..
+make
+sudo make install
+
+*** Build options ***
+-DCMAKE_BUILD_TYPE={Release, RelWithDebInfo, Debug, MinRelSize}
+

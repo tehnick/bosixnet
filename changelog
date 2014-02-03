@@ -1,0 +1,10 @@
+--- 1.0 2014-02-03 ---
+* Changed version numbering scheme.
+* Project was rewritten from qmake to cmake.
+* Program bosixnet-webui was rewritten from QtCore 4.x to pure STL.
+* Added support of config files into scripts: bosixnet_daemon, update_address,
+  update_hosts and webui_launcher.
+* Updated README.
+
+--- 0.0.1 2013-10-17 ---
+* Initial release.

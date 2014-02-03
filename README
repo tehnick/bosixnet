@@ -1,0 +1,61 @@
+BOSixNet -- Build Own IPv6 Network
+
+Copyright: 2013-2014 Boris Pek <tehnick-8@mail.ru>
+License: GPLv2 or later
+
+Homepage: https://github.com/tehnick/bosixnet
+
+Deb packages:
+  https://github.com/tehnick/bosixnet-debian
+  https://launchpad.net/~tehnick/+archive/bosixnet
+
+Project consist of two parts:
+1) bosixnet-webui -- FastCGI program which passively listens for incoming
+   connections and generates list of hosts in your IPv6 network. This daemon
+   prepares data which may be put directly into /etc/hosts.
+2) bosixnet-daemon -- shell script which periodically sends information about
+   current IPv6 address to remote server and updates local /etc/hosts based on
+   data received from that remote server. It is expected that bosixnet-webui
+   is launched on that remote server.
+
+For building own IPv6 network you need to install miredo, gogoc or any other
+tunnel broker software on all hosts where bosixnet-daemon will be launched.
+Of course you do not need any of these programs if your Internet provider
+gives you direct access to IPv6 network. Unfortunately this is too rare
+situation now.
+
+There are few possible solutions for remote server with bosixnet-webui:
+1) Fixed IPv4 or IPv6 address. But if you have statical IP you may use other
+   solutions (like VPN) and this project is not very useful in your case.
+2) Fixed domain name + dynamic IPv4. For example, using any DDNS provider.
+3) Fixed domain name + dynamic IPv6. Some tunnel brokers give special domain
+   names for their clients. For example, if you are registered on Freenet6 and
+   use gogoc, you will have domain name like: tehnick.broker.freenet6.net
+4) etc.
+
+bosixnet-webui is a small program with very few dependencies. It may be easily
+launched on embedded devices.
+
+Important notes:
+1) The speed of access via miredo is much better than via any tunnel brokers.
+2) If two computers are in the same LAN, direct connection via miredo is not
+   possible between them. So at least one of them should use tunnel broker.
+
+Examples of using Web UI:
+  http://ipv6.example.com/bosixnet/my-main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de
+  http://ipv6.example.com/bosixnet/my-main-laptop
+  http://ipv6.example.com/bosixnet/my-home-pc?update=2001:0:53aa:64c:3574:128e:9291:a021
+  http://ipv6.example.com/bosixnet/my-home-pc
+  http://ipv6.example.com/bosixnet/my-wife-netbook?update=2001:0:53aa:64c:26e0:3bf2:9258:72de
+  http://ipv6.example.com/bosixnet/my-wife-netbook
+  http://ipv6.example.com/bosixnet/counter
+  http://ipv6.example.com/bosixnet/hosts
+  http://ipv6.example.com/bosixnet/
+
+Example of configuring nginx:
+Edit file /etc/nginx/sites-available/default and paste something like this:
+    location /bosixnet/ {
+        fastcgi_pass   localhost:33169;
+        include        /etc/nginx/fastcgi_params;
+    }
+
