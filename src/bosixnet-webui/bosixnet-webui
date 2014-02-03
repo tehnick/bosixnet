@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 # Author: Boris Pek
-# Last updated: 2014-02-03
+# Last updated: 2014-02-04
 
 DAEMON=/usr/lib/bosixnet/webui_launcher
 DAEMON_OPTS=
@@ -19,8 +19,9 @@ NAME=bosixnet_webui
 DESC=bosixnet_webui
 SCRIPT=bosixnet-webui
 
-# Run level on system startup
-L=50
+. /lib/lsb/init-functions
+
+set -e
 
 case "$1" in
                 start)
@@ -65,12 +66,7 @@ fi
                 install)
 
 cp -f ${0} /etc/init.d/${SCRIPT}
-rm -f /etc/rc*.d/*${SCRIPT}*
-ln -sf /etc/init.d/${SCRIPT} /etc/rc2.d/S${L}${SCRIPT}
-ln -sf /etc/init.d/${SCRIPT} /etc/rc3.d/S${L}${SCRIPT}
-ln -sf /etc/init.d/${SCRIPT} /etc/rc4.d/S${L}${SCRIPT}
-ln -sf /etc/init.d/${SCRIPT} /etc/rc5.d/S${L}${SCRIPT}
-ln -sf /etc/init.d/${SCRIPT} /etc/rc6.d/K01${SCRIPT}
+insserv bosixnet-webui
 
                 ;;
                 remove)

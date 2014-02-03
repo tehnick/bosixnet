@@ -1,3 +1,6 @@
+--- 1.1 2014-02-04 ---
+* Update init scripts.
+
 --- 1.0 2014-02-03 ---
 * Changed version numbering scheme.
 * Project was rewritten from qmake to cmake.
