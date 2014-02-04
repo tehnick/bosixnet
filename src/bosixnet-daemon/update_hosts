@@ -10,20 +10,19 @@ LOG_DIR="/var/tmp/bosixnet"
 URL="http://ipv6.example.com/bosixnet"
 
 # Read settings from config file if it exists
-if [ -e "${CONF_FILE}" ]; then
-    . "${CONF_FILE}"
-fi
+[ -e "${CONF_FILE}" ] && . "${CONF_FILE}"
 
 
 HOSTS="/etc/hosts"
 FILE="${LOG_DIR}/hosts"
 LINK="${URL}/hosts"
 
-CUR_INFO="$(cat ${FILE} | sed '/^$/d')"
+[ -e "${FILE}" ] && CUR_INFO="$(cat ${FILE} | grep '^2001:')"
+
 if [ -z "${CUR_INFO}" ]; then
-    echo "File ${FILE} does not exist."
+    echo "File ${FILE} does not exist or does not contain correct data."
     echo "Trying to get data from ${LINK}..."
-    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | sed '/^$/d')"
+    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^2001:')"
     if [ -z "${CUR_INFO}" ]; then
         echo "Attempt to get data from ${LINK} failed."
         exit 1

@@ -10,9 +10,7 @@ HOST_NAME="$(uname -n)"
 URL="http://ipv6.example.com/bosixnet"
 
 # Read settings from config file if it exists
-if [ -e "${CONF_FILE}" ]; then
-    . "${CONF_FILE}"
-fi
+[ -e "${CONF_FILE}" ] && . "${CONF_FILE}"
 
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin

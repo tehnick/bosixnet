@@ -1,3 +1,9 @@
+--- 1.4 2014-02-04 ---
+* Improved update_hosts: only strings with IPv6 addresses is copied into
+  /etc/hosts, all rest data is ignored now.
+* Small code refactoring in scripts: bosixnet_daemon, update_address,
+  update_hosts, webui_launcher.
+
 --- 1.3 2014-02-04 ---
 * Small fix in bosixnet_daemon: send some useless warnings to /dev/null.
 * Tiny fix in LOG_DIR variable.
