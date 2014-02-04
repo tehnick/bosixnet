@@ -2,7 +2,7 @@ project (bosixnet)
 cmake_minimum_required (VERSION 2.8)
 
 set (PROJECT_NAME "BOSixNet")
-set (VERSION "1.1")
+set (VERSION "1.2")
 
 add_subdirectory (src/bosixnet-daemon)
 add_subdirectory (src/bosixnet-webui)
