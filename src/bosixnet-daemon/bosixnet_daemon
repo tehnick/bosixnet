@@ -36,8 +36,8 @@ fi
 
 # Infinite cycle for periodical updates
 while [ 1 ]; do
-    "${DIR_UTIL}/update_address" >/dev/null
-    "${DIR_UTIL}/update_hosts" >/dev/null
+    "${DIR_UTIL}/update_address" >/dev/null 2>/dev/null
+    "${DIR_UTIL}/update_hosts" >/dev/null 2>/dev/null
     sleep ${UPD_PERIOD}
 done
 

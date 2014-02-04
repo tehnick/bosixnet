@@ -4,7 +4,7 @@
 CONF_FILE="/etc/bosixnet/bosixnet-daemon.conf"
 
 # Directory where generated host file is stored:
-LOG_DIR="/var/tmp/bosixnet/"
+LOG_DIR="/var/tmp/bosixnet"
 
 # Default web-site URL
 URL="http://ipv6.example.com/bosixnet"

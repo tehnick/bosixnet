@@ -33,7 +33,7 @@
 using namespace std;
 
 string basic_url = "/bosixnet/";
-string log_dir = "/var/tmp/bosixnet/";
+string log_dir = "/var/tmp/bosixnet";
 string conf_file = "/etc/bosixnet/bosixnet-webui.conf";
 
 map<string, string> hosts_map;
@@ -229,7 +229,7 @@ void show_html(const string &str)
 
 void show_hosts()
 {
-    string log_file = log_dir + "hosts";
+    string log_file = log_dir + "/hosts";
     string out = "File " + log_file + " is empty!";
     ifstream file;
     file.open(log_file.c_str(), ios::in);
@@ -247,7 +247,7 @@ void show_hosts()
 
 void read_hosts()
 {
-    string log_file = log_dir + "hosts";
+    string log_file = log_dir + "/hosts";
     ifstream file;
     file.open(log_file.c_str(), ios::in);
     if (file.is_open()) {
@@ -276,7 +276,7 @@ void write_hosts()
             return;
         }
     }
-    string log_file = log_dir + "hosts";
+    string log_file = log_dir + "/hosts";
     ofstream file;
     file.open(log_file.c_str(), ios::out);
     if (file.is_open()) {
