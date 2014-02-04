@@ -1,3 +1,8 @@
+--- 1.2 2014-02-04 ---
+* Rewritten init scripts.
+* Added script daemon_launcher.
+* Updated script webui_launcher.
+
 --- 1.1 2014-02-04 ---
 * Update init scripts.
 

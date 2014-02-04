@@ -7,7 +7,7 @@ install (FILES bosixnet_daemon
 install (FILES bosixnet-daemon
          DESTINATION "/etc/init.d/"
          PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-install (FILES update_address update_hosts
+install (FILES daemon_launcher update_address update_hosts
          DESTINATION "/usr/lib/bosixnet/"
          PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install (FILES bosixnet-daemon.conf

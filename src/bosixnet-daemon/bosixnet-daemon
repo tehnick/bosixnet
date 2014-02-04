@@ -13,73 +13,87 @@
 # Author: Boris Pek
 # Last updated: 2014-02-04
 
-DAEMON=/usr/bin/bosixnet_daemon
-DAEMON_OPTS=
 NAME=bosixnet_daemon
-DESC=bosixnet_daemon
+DESC="BOSixNet daemon"
+DAEMON=/usr/lib/bosixnet/daemon_launcher
+DAEMON_OPTS=
 SCRIPT=bosixnet-daemon
+PIDFILE=/var/run/${NAME}.pid
+
+
+[ -x ${DAEMON} ] || exit 0
 
 . /lib/lsb/init-functions
 
 set -e
 
+check_start() {
+    set +e
+    DAEMON_PID="$(pidof -x ${NAME})"
+    if [ ! -z "${DAEMON_PID}" ]; then
+        log_end_msg $?
+        exit 0
+    fi
+    set -e
+}
+
+check_stop() {
+    set +e
+    DAEMON_PID="$(pidof -x ${NAME})"
+    if [ ! -z "${DAEMON_PID}" ]; then
+        killall -9 "${NAME}" >/dev/null 2>/dev/null
+        sleep 1
+    fi
+    set -e
+}
+
+start() {
+    check_start
+    start-stop-daemon --start --quiet --pidfile "${PIDFILE}" \
+        --exec "${DAEMON}" --oknodo -- ${DAEMON_OPTS}
+}
+
+stop() {
+    start-stop-daemon --stop --quiet --pidfile "${PIDFILE}" \
+        --exec "${DAEMON}" --oknodo --retry 5
+    sleep 1
+    check_stop
+}
+
 case "$1" in
-                start)
-
-DAEMON_PID="$(pidof -x ${NAME})"
-if [ ! -z "${DAEMON_PID}" ]; then
-    echo "${NAME} is already running with PID: ${DAEMON_PID}"
-    exit 0
-fi
-
-echo -n "Starting ${DESC}: "
-${DAEMON} "${DAEMON_OPTS}" &
-echo "${NAME}."
-
-                ;;
-                stop)
-
-echo -n "Stopping ${DESC}: "
-killall -9 "${NAME}"
-echo "${NAME}."
-
-                ;;
-                restart|force-reload)
-
-echo -n "Restarting ${DESC}: "
-killall -9 "${NAME}"
-sleep 1
-${DAEMON} "${DAEMON_OPTS}" &
-echo "${NAME}."
-
-                ;;
-                status)
-
-DAEMON_PID="$(pidof -x ${NAME})"
-if [ ! -z "${DAEMON_PID}" ]; then
-    echo "${NAME} is already running with PID: ${DAEMON_PID}"
-else
-    echo "${NAME} is not running."
-fi
-
-                ;;
-                install)
-
-cp -f ${0} /etc/init.d/${SCRIPT}
-insserv bosixnet-daemon
-
-                ;;
-                remove)
-
-rm -f /etc/rc*.d/*${SCRIPT}*
-rm -f /etc/init.d/${SCRIPT}
-
-                ;;
-                *)
-
-echo "Usage: {start|stop|restart|force-reload|status|install|remove}"
-exit 1
-
-                ;;
+    start)
+        log_daemon_msg "Starting ${DESC}" "${NAME}"
+        start
+        log_end_msg $?
+        ;;
+    stop)
+        log_daemon_msg "Stopping ${DESC}" "${NAME}"
+        stop
+        log_end_msg $?
+        ;;
+    restart|force-reload)
+        log_daemon_msg "Restarting ${DESC}" "${NAME}"
+        stop
+        sleep 1
+        start
+        log_end_msg $?
+        ;;
+    status)
+        status_of_proc -p "${PIDFILE}" "${DAEMON}" "${NAME}" && exit 0 || exit $?
+        ;;
+    install)
+        cp -f ${0} /etc/init.d/${SCRIPT}
+        insserv bosixnet-webui
+        ;;
+    remove)
+        rm -f /etc/rc*.d/*${SCRIPT}*
+        rm -f /etc/init.d/${SCRIPT}
+        ;;
+    *)
+        echo "Usage: /etc/init.d/${SCRIPT} {start|stop|restart|force-reload|status|install|remove}" >&2
+        exit 1
+        ;;
 esac
+
+exit 0
 

@@ -26,16 +26,16 @@ fi
 
 
 # Launch program
-if test x${FCGI_CHILDREN} = x; then
+if [ x${FCGI_CHILDREN} = x ]; then
   FCGI_CHILDREN=5
 fi
 
-if test x${UID} = x0; then
+if [ x${UID} = x0 ]; then
   EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -u ${USERID} -g ${GROUPID} -C ${FCGI_CHILDREN}"
 else
   EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -C ${FCGI_CHILDREN}"
 fi
 
 # Clean the environment and set up a new one
-env - ${E} ${EX}
+env - ${E} ${EX} >/dev/null 2>/dev/null
 
