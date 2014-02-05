@@ -330,7 +330,7 @@ string get_param(const string &buff, const string &name)
         return "";
 
     size_t param_begin = buff.find(name);
-    if (param_begin == buff.npos)
+    if (param_begin == string::npos)
         return "";
 
     param_begin += name.size();
@@ -338,7 +338,7 @@ string get_param(const string &buff, const string &name)
         return "";
 
     size_t param_end = buff.find("&", param_begin);
-    if (param_end == buff.npos)
+    if (param_end == string::npos)
         param_end = buff.size();
 
     string out = buff.substr(param_begin, param_end - param_begin);
