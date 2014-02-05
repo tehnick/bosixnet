@@ -33,7 +33,7 @@ situation now.
 
 There are few possible solutions for remote server with bosixnet-webui:
 1) Fixed IPv4 or IPv6 address. But if you have statical IP you may use other
-   solutions (like VPN) and this project is not very useful in your case.
+   solutions (like VPN) and this project is not very useful in such case.
 2) Dynamic IPv4 address + fixed domain name. For example, you may any DDNS
    provider.
 3) Dynamic IPv6 address + fixed domain name. Some tunnel brokers give special
