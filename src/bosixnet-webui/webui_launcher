@@ -3,29 +3,41 @@
 # Config file
 CONF_FILE="/etc/bosixnet/bosixnet-webui.conf"
 
-# ABSOLUTE path to the program binary
-FCGIPROGRAM="/usr/bin/bosixnet_webui"
-
-# ABSOLUTE path to the spawn-fcgi binary
-SPAWNFCGI="/usr/bin/spawn-fcgi"
+# If this script is run as root, switch to the specific user
+USERID=bosixnet
+GROUPID=bosixnet
 
 # TCP port to which to bind on localhost
 FCGIPORT=33169
 
-# If this script is run as root, switch to the specific user
-USERID=user
-GROUPID=user
-
 # Number of children to spawn
 FCGI_CHILDREN=1
+
+# ABSOLUTE path to the spawn-fcgi binary
+SPAWNFCGI="/usr/bin/spawn-fcgi"
+
+# ABSOLUTE path to the program binary
+FCGIPROGRAM="/usr/bin/bosixnet_webui"
 
 # Read settings from config file if it exists
 [ -e "${CONF_FILE}" ] && . "${CONF_FILE}"
 
+# Check if user exists
+if ! id -u ${USERID} >/dev/null 2>&1; then
+    echo "User ${USERID} does not exist! Check what you use the correct USERID."
+    exit 1
+fi
 
-# Launch program
+# Check if gruop exists
+if ! id -g ${GROUPID} >/dev/null 2>&1; then
+    echo "Group ${GROUPID} does not exist! Check what you use the correct GROUPID."
+    exit 1
+fi
+
+# Check the number of children for spawning
 [ x${FCGI_CHILDREN} = x ] && FCGI_CHILDREN=5
 
+# Launch program
 if [ x${UID} = x0 ]; then
   EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -u ${USERID} -g ${GROUPID} -C ${FCGI_CHILDREN}"
 else
@@ -33,5 +45,5 @@ else
 fi
 
 # Clean the environment and set up a new one
-env - ${E} ${EX} >/dev/null 2>/dev/null
+env - ${E} ${EX} >/dev/null 2>&1
 

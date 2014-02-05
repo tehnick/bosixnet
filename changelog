@@ -1,3 +1,6 @@
+--- 1.5 2014-02-05 ---
+* Changed default user in webui_launcher from "user" to "bosixnet".
+
 --- 1.4 2014-02-04 ---
 * Improved update_hosts: only strings with IPv6 addresses is copied into
   /etc/hosts, all rest data is ignored now.
