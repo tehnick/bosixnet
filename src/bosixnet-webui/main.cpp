@@ -198,15 +198,15 @@ void read_config()
 
 void show_help()
 {
-    cout << "Usage: bosixnet-webui [options]\n"
+    cout << "Usage: bosixnet_webui [options]\n"
             "\n"
             "FastCGI program which passively listens for incoming connections and\n"
             "generates list of hosts in your IPv6 network. This daemon prepares data\n"
             "which may be put directly into /etc/hosts.\n"
             "\n"
             "Generic options:\n"
-            "  -h, --help    show help\n"
-            "  -v, --vesion  show vesion\n"
+            "  -h, --help     show help\n"
+            "  -v, --version  show version\n"
             "\n"
             "Options:\n"
             "  -b <string>, --basic-url <string>  set basic url (default: " + basic_url + ")\n"

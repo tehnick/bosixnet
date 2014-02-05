@@ -2,6 +2,7 @@
 gcc (>= 4.8) or clang (>= 3.2)
 libfcgi-dev (>= 2.4)
 cmake (>= 2.8)
+gzip
 
 *** Runtime dependencies ***
 libfcgi -- Shared library of FastCGI

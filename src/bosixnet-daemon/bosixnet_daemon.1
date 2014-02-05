@@ -1,0 +1,30 @@
+.TH "bosixnet_daemon" 1 "05 Feb 2014"
+.SH "NAME"
+bosixnet_daemon \- shell script which periodically sends information about current IPv6 address to remote server and updates local /etc/hosts based on data received from that remote server. It is expected that bosixnet-webui is launched on that remote server.
+.SH "SYNOPSIS"
+.PP
+.B bosixnet_daemon
+[options]
+.SH "DESCRIPTION"
+.PP
+\fBBOSixNet\fP \-\- Build Own IPv6 Network.
+.TP
+Project should be useful when you have to administer many computers distributed through different networks and connected via NAT. In most of cases you may just install miredo, gogoc or any other tunnel broker's software and these computers will be available via IPv6 addresses. BOSixNet includes the collection of tools for automatic updating the list of such hosts.
+.SH "OPTIONS"
+.RB "Generic options:"
+.TP
+.BR "\-h,  \-\-help"
+Show help and exit.
+.TP
+.BR "\-v,  \-\-version"
+Show version and exit.
+.SH "FILES"
+.TP
+.B "/etc/bosixnet/"
+Directory with configuration files.
+.SH "DOCUMENTATION"
+.TP
+Basic information: \fBhttps://github.com/tehnick/bosixnet/blob/master/README\fR
+.SH "BUG REPORTS"
+Please report bugs here:
+\fBhttps://github.com/tehnick/bosixnet/issues\fR

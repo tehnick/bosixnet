@@ -1,0 +1,43 @@
+.TH "bosixnet_webui" 1 "05 Feb 2014"
+.SH "NAME"
+bosixnet_webui \- FastCGI program which passively listens for incoming connections and generates list of hosts in your IPv6 network. This daemon prepares data which may be put directly into /etc/hosts.
+.SH "SYNOPSIS"
+.PP
+.B bosixnet_webui
+[options]
+.SH "DESCRIPTION"
+.PP
+\fBBOSixNet\fP \-\- Build Own IPv6 Network.
+.TP
+Project should be useful when you have to administer many computers distributed through different networks and connected via NAT. In most of cases you may just install miredo, gogoc or any other tunnel broker's software and these computers will be available via IPv6 addresses. BOSixNet includes the collection of tools for automatic updating the list of such hosts.
+.SH "OPTIONS"
+.RB "Generic options:"
+.TP
+.BR "\-h,  \-\-help"
+Show help and exit.
+.TP
+.BR "\-v,  \-\-version"
+Show version and exit.
+.TP
+.RB "Special options:"
+.TP
+.BR "\-b <string>,  \-\-basic-url <string>"
+Set basic url (default: /bosixnet/).
+.TP
+.BR "\-l <dir>,  \-\-log-dir <dir>"
+Set log directory (default: /var/tmp/bosixnet).
+.TP
+.BR "\-c <file>,  \-\-confdir <dir>"
+Set config file (default: /etc/bosixnet/bosixnet-webui.conf).
+.br
+Settings in config file have lower priority than command line options.
+.SH "FILES"
+.TP
+.B "/etc/bosixnet/"
+Directory with configuration files.
+.SH "DOCUMENTATION"
+.TP
+Basic information: \fBhttps://github.com/tehnick/bosixnet/blob/master/README\fR
+.SH "BUG REPORTS"
+Please report bugs here:
+\fBhttps://github.com/tehnick/bosixnet/issues\fR

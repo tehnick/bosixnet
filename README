@@ -9,6 +9,13 @@ Deb packages:
   https://github.com/tehnick/bosixnet-debian
   https://launchpad.net/~tehnick/+archive/bosixnet
 
+Description:
+Project should be useful when you have to administer many computers
+distributed through different networks and connected via NAT. In most of cases
+you may just install miredo, gogoc or any other tunnel broker's software and
+these computers will be available via IPv6 addresses. BOSixNet includes the
+collection of tools for automatic updating the list of such hosts.
+
 Project consist of two parts:
 1) bosixnet-webui -- FastCGI program which passively listens for incoming
    connections and generates list of hosts in your IPv6 network. This daemon
@@ -27,19 +34,28 @@ situation now.
 There are few possible solutions for remote server with bosixnet-webui:
 1) Fixed IPv4 or IPv6 address. But if you have statical IP you may use other
    solutions (like VPN) and this project is not very useful in your case.
-2) Fixed domain name + dynamic IPv4. For example, using any DDNS provider.
-3) Fixed domain name + dynamic IPv6. Some tunnel brokers give special domain
-   names for their clients. For example, if you are registered on Freenet6 and
-   use gogoc, you will have domain name like: tehnick.broker.freenet6.net
+2) Dynamic IPv4 address + fixed domain name. For example, you may any DDNS
+   provider.
+3) Dynamic IPv6 address + fixed domain name. Some tunnel brokers give special
+   domain names for their clients. For example, if you are registered on
+   Freenet6 and use gogoc, you will have domain name like:
+   <your-login>.broker.freenet6.net
 4) etc.
 
 bosixnet-webui is a small program with very few dependencies. It may be easily
 launched on embedded devices.
 
 Important notes:
-1) The speed of access via miredo is much better than via any tunnel brokers.
-2) If two computers are in the same LAN, direct connection via miredo is not
+1) In almost all cases the speed of access via teredo is much better than via
+   tunnel brokers. Also miredo is very easy in use.
+2) If two computers are in the same LAN, direct connection via teredo is not
    possible between them. So at least one of them should use tunnel broker.
+
+Some useful links:
+  https://en.wikipedia.org/wiki/IPv6
+  https://en.wikipedia.org/wiki/Teredo_tunneling
+  https://en.wikipedia.org/wiki/Miredo
+  https://github.com/jorti/gogoc
 
 Examples of using Web UI:
   http://ipv6.example.com/bosixnet/my-main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de

@@ -15,20 +15,20 @@ DIR_UTIL="/usr/lib/bosixnet"
 
 # Check command line options
 if [ "${1}" = "-h" -o "${1}" = "--help" ]; then
-    echo "Usage: bosixnet-daemon [options]
+    echo "Usage: bosixnet_daemon [options]
 
 This shell script periodically sends information about current IPv6 address to
 remote server and updates local /etc/hosts based on data received from that
 remote server. It is expected that bosixnet-webui is launched on remote server.
 
 Generic options:
-  -h, --help    show help
-  -v, --vesion  show vesion
+  -h, --help     show help
+  -v, --version  show version
 
 Settings are in config file: ${CONF_FILE}"
     exit 0
 elif [ "${1}" = "-v" -o "${1}" = "--version" ]; then
-    echo "Last updated: 2014-02-03"
+    echo "Last updated: 2014-02-05"
     exit 0
 fi
 
