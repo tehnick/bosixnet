@@ -32,7 +32,7 @@
 
 using namespace std;
 
-string basic_url = "/bosixnet/";
+string basic_str = "/bosixnet/";
 string log_dir = "/var/tmp/bosixnet";
 string conf_file = "/etc/bosixnet/bosixnet-webui.conf";
 
@@ -98,13 +98,13 @@ int main(int argc, char **argv)
         string full_path = get_env_var("SCRIPT_NAME");
         string path = get_env_var("SCRIPT_FULL_PATHNAME");
 
-        if (ends_with(full_path, basic_url)) {
+        if (ends_with(full_path, basic_str)) {
             show_hosts();
         }
-        else if(ends_with(full_path, basic_url + "hosts")) {
+        else if(ends_with(full_path, basic_str + "hosts")) {
             show_hosts();
         }
-        else if(ends_with(full_path, basic_url + "counter")) {
+        else if(ends_with(full_path, basic_str + "counter")) {
             stringstream counter_str;
             counter_str << counter;
             show_html("Counter: " + counter_str.str());
@@ -157,8 +157,8 @@ void read_options(int argc, char **argv)
         for (int idx = 1 ; idx < argc - 1 ; ++idx) {
             arg = argv[idx];
             arg_next = argv[idx + 1];
-            if (arg == "-b" || arg == "--basic-url") {
-                basic_url = arg_next;
+            if (arg == "-b" || arg == "--basic-str") {
+                basic_str = arg_next;
             }
             else if (arg == "-l" || arg == "--log-dir") {
                 log_dir = arg_next;
@@ -180,10 +180,10 @@ void read_config()
             getline(file, buff);
             buff = remove_extra_symbols(buff, " \t");
             if (buff.size() >= 3 && buff.at(0) != '#') {
-                var = "BASIC_URL";
+                var = "BASIC_STR";
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
-                    basic_url = tmp;
+                    basic_str = tmp;
                 }
                 var = "LOG_DIR";
                 tmp = get_conf_var(buff, var);
@@ -209,7 +209,7 @@ void show_help()
             "  -v, --version  show version\n"
             "\n"
             "Options:\n"
-            "  -b <string>, --basic-url <string>  set basic url (default: " + basic_url + ")\n"
+            "  -b <string>, --basic-str <string>  set basic url (default: " + basic_str + ")\n"
             "  -l <dir>, --log-dir <dir>          set log directory (default: " + log_dir + ")\n"
             "  -c <file>, --conf-file <file>      set config file (default: " + conf_file + ")\n"
             "\n"
