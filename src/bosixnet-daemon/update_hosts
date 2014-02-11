@@ -15,20 +15,27 @@ URL="http://ipv6.example.com/bosixnet"
 
 HOSTS="/etc/hosts"
 FILE="${LOG_DIR}/hosts"
-LINK="${URL}/hosts"
 
 [ -e "${FILE}" ] && CUR_INFO="$(cat ${FILE} | grep '^....:.*:.*:.*')"
 
 if [ -z "${CUR_INFO}" ]; then
     echo "File ${FILE} does not exist or does not contain correct data."
-    echo "Trying to get data from ${LINK}..."
-    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^....:.*:.*:.*')"
-    if [ -z "${CUR_INFO}" ]; then
-        echo "Attempt to get data from ${LINK} failed."
-        exit 1
-    else
-        echo "Data from ${LINK} have been received successfully."
-    fi
+    for DEST in ${URL} ; do
+        LINK="${DEST}/hosts"
+        echo "Trying to get data from ${LINK}..."
+        CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^....:.*:.*:.*')"
+        if [ -z "${CUR_INFO}" ]; then
+            echo "Attempt to get data from ${LINK} failed."
+        else
+            echo "Data from ${LINK} have been received successfully."
+            break
+        fi
+    done
+fi
+
+if [ -z "${CUR_INFO}" ]; then
+    echo "Data failed to be received from specified resources."
+    exit 1
 fi
 
 cp -f "${HOSTS}" "${HOSTS}.backup"

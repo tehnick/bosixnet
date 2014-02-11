@@ -19,9 +19,11 @@ IPv6_INFO="$(ifconfig | grep 'inet6 addr:' | grep 'Scope:Global')"
 IPv6_CUR=$(echo "${IPv6_INFO}" | sed -e "s|^.*inet6 addr:\ \(.*\)/[0-9]*\ Scope:Global$|\1|" | tail -n1)
 
 if [ ! -z "${IPv6_CUR}" ]; then
-    IPv6_OLD="$(curl ${URL}/${HOST_NAME} 2>/dev/null)"
-    if [ "${IPv6_OLD}" != "${IPv6_CUR}" ]; then
-        curl "${URL}/${HOST_NAME}?update=${IPv6_CUR}" 2>/dev/null >/dev/null
-    fi
+    for DEST in ${URL} ; do
+        LINK="${DEST}/${HOST_NAME}"
+        IPv6_OLD="$(curl ${LINK} 2>/dev/null)"
+        if [ "${IPv6_OLD}" != "${IPv6_CUR}" ]; then
+            curl "${LINK}?update=${IPv6_CUR}" 2>/dev/null >/dev/null
+        fi
+    done
 fi
-

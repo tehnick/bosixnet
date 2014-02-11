@@ -5,6 +5,10 @@
   - strings should have at least three ":" characters
   - fifth character from strings should be equal to ":"
   (Affects only script update_hosts.)
+* Added support of multiple servers:
+  - IPv6 address is sent to all available servers
+  - data about hosts is got from the first server which replies to request
+  See file bosixnet-daemon.conf for examples of configuring.
 *** bosixnet-webui ***
 * Removed support of POST requests.
 * Added simple check for valid IPv6 address received in GET request:
