@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <cstdlib>
+#include <cstring>
 
 #include <fcgi_stdio.h>
 
@@ -51,6 +52,7 @@ void write_hosts();
 
 bool ends_with(const string &, const string &);
 bool starts_with(const string &, const string &);
+bool is_valid_ipv6_address(const string &);
 
 string get_env_var(const string &);
 string get_param(const string &, const string &);
@@ -86,7 +88,7 @@ int main(int argc, char **argv)
             content = get_env_var("QUERY_STRING");
         }
         else {
-            show_html("<center><h2>Only GET request method is allowed!</h2></center>\r\n");
+            show_html("<center><h2>Only GET request method is allowed!</h2></center>\n");
             continue;
         };
 
@@ -116,10 +118,13 @@ int main(int argc, char **argv)
                     show_html("");
                 }
             }
-            else {
+            else if(is_valid_ipv6_address(new_address)) {
                 hosts_map[host_name] = new_address;
                 show_html(new_address);
                 write_hosts();
+            }
+            else {
+                show_html(new_address + " is not a valid IPv6 address!");
             }
         }
     }
@@ -218,7 +223,7 @@ void show_version()
 
 void show_html(const string &str)
 {
-    printf("Content-type: text/html\r\n\r\n");
+    printf("Content-type: text/html\n\n");
     printf("%s", str.c_str());
 }
 
@@ -255,7 +260,9 @@ void read_hosts()
             str >> addr;
             str >> host;
             if (!addr.empty() && !host.empty()){
-                hosts_map[host] = addr;
+                if (is_valid_ipv6_address(addr)){
+                    hosts_map[host] = addr;
+                }
             }
         }
         file.close();
@@ -296,6 +303,32 @@ bool starts_with(const string &str, const string &pfx)
         return false;
 
     return equal(str.begin(), str.begin() + pfx.size(), pfx.begin());
+}
+
+bool is_valid_ipv6_address(const string &str)
+{
+    size_t len = str.size();
+    if (len < 8)
+        return false;
+    else if (len > 39)
+        return false;
+
+    unsigned int counter = 0;
+    const char *p = str.c_str();
+    while (strstr(p,":")) {
+        ++counter;
+        ++p;
+    }
+
+    if (counter < 3)
+        return false;
+    else if (str.at(4) != ':')
+        return false;
+
+    if (str.find_first_not_of(":0123456789abcdefABCDEF") != string::npos)
+        return false;
+
+    return true;
 }
 
 string get_env_var(const string &var)

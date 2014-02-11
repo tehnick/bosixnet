@@ -1,6 +1,13 @@
 --- 1.6 2014-02-11 ---
 *** bosixnet-webui ***
 * Removed support of POST requests.
+* Added simple check for valid IPv6 address received in GET request:
+  - string should be longer than 7 characters
+  - string should be shorter than 40 characters
+  - string should have at least three ":" characters
+  - fifth character from string should be equal to ":"
+  - string should contain only allowed characters (:0123456789abcdefABCDEF)
+  The same check is used during loading the list of hosts from file.
 
 --- 1.5 2014-02-05 ---
 * Changed default user in webui_launcher from "user" to "bosixnet".
