@@ -17,12 +17,12 @@ HOSTS="/etc/hosts"
 FILE="${LOG_DIR}/hosts"
 LINK="${URL}/hosts"
 
-[ -e "${FILE}" ] && CUR_INFO="$(cat ${FILE} | grep '^2001:')"
+[ -e "${FILE}" ] && CUR_INFO="$(cat ${FILE} | grep '^....:.*:.*:.*')"
 
 if [ -z "${CUR_INFO}" ]; then
     echo "File ${FILE} does not exist or does not contain correct data."
     echo "Trying to get data from ${LINK}..."
-    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^2001:')"
+    CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^....:.*:.*:.*')"
     if [ -z "${CUR_INFO}" ]; then
         echo "Attempt to get data from ${LINK} failed."
         exit 1
@@ -32,7 +32,7 @@ if [ -z "${CUR_INFO}" ]; then
 fi
 
 cp -f "${HOSTS}" "${HOSTS}.backup"
-cat "${HOSTS}.backup" | grep -v '^2001:' | tee "${HOSTS}" > /dev/null
+cat "${HOSTS}.backup" | grep -v '^....:.*:.*:.*' | tee "${HOSTS}" > /dev/null
 echo "${CUR_INFO}" | tee -a "${HOSTS}" > /dev/null
 
 echo "There are such data in ${HOSTS} now:"

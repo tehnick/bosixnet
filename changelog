@@ -1,4 +1,10 @@
 --- 1.6 2014-02-11 ---
+*** bosixnet-daemon ***
+* Improved simple check for validity of IPv6 addresses received from server:
+  - strings should be longer than 6 characters
+  - strings should have at least three ":" characters
+  - fifth character from strings should be equal to ":"
+  (Affects only script update_hosts.)
 *** bosixnet-webui ***
 * Removed support of POST requests.
 * Added simple check for valid IPv6 address received in GET request:
