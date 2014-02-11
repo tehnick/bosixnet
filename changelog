@@ -1,3 +1,7 @@
+--- 1.6 2014-02-11 ---
+*** bosixnet-webui ***
+* Removed support of POST requests.
+
 --- 1.5 2014-02-05 ---
 * Changed default user in webui_launcher from "user" to "bosixnet".
 * Added man pages, updated README and fixed few typos in help.

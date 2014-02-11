@@ -53,7 +53,6 @@ bool ends_with(const string &, const string &);
 bool starts_with(const string &, const string &);
 
 string get_env_var(const string &);
-string get_post_request();
 string get_param(const string &, const string &);
 string get_conf_var(const string &, const string &);
 string remove_extra_symbols(const string &, const string &);
@@ -86,12 +85,8 @@ int main(int argc, char **argv)
         if (request_method == "GET") {
             content = get_env_var("QUERY_STRING");
         }
-        else if (request_method == "POST") {
-
-            content = get_post_request();
-        }
         else {
-            show_html("<center><h2>Unknown REQUEST_METHOD. Use only GET or POST!</h2></center>\r\n");
+            show_html("<center><h2>Only GET request method is allowed!</h2></center>\r\n");
             continue;
         };
 
@@ -307,21 +302,6 @@ string get_env_var(const string &var)
 {
     char *ptr = getenv(var.c_str());
     return (ptr ? string(ptr) : "");
-}
-
-string get_post_request()
-{
-    char *content = NULL;
-    char *endptr = NULL;
-    unsigned int contentlength;
-    const char *clen = getenv("CONTENT_LENGTH");
-    contentlength = strtol(clen, &endptr, 10);
-    if (contentlength) {
-        content = new char[contentlength];
-        fread(content, contentlength, 1, stdin);
-        content[contentlength] = '\0';
-    }
-    return (content ? string(content) : "");
 }
 
 string get_param(const string &buff, const string &name)
