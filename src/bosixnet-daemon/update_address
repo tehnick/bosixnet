@@ -15,8 +15,8 @@ URL="http://ipv6.example.com/bosixnet"
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-IPv6_INFO="$(ifconfig | grep 'inet6 addr:' | grep 'Scope:Global')"
-IPv6_CUR=$(echo "${IPv6_INFO}" | sed -e "s|^.*inet6 addr:\ \(.*\)/[0-9]*\ Scope:Global$|\1|" | tail -n1)
+IPv6_INFO="$(ip -6 addr | grep -i global)"
+IPv6_CUR=$(echo "${IPv6_INFO}" | sed -e "s|^.*inet6\ \(.*\)/[0-9]*\ .*$|\1|" | tail -n1)
 
 if [ ! -z "${IPv6_CUR}" ]; then
     for DEST in ${URL} ; do
@@ -27,3 +27,4 @@ if [ ! -z "${IPv6_CUR}" ]; then
         fi
     done
 fi
+
