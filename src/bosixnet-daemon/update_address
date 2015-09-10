@@ -15,8 +15,15 @@ URL="http://ipv6.example.com/bosixnet"
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-IPv6_INFO="$(ip -6 addr | grep -i global)"
-IPv6_CUR=$(echo "${IPv6_INFO}" | sed -e "s|^.*inet6\ \(.*\)/[0-9]*\ .*$|\1|" | tail -n1)
+if [ ! -z "${NETWORK_DEVICE}" ]; then
+    IPv6_INFO="$(ip -6 addr show "${NETWORK_DEVICE}" | grep -i global)"
+else
+    IPv6_INFO="$(ip -6 addr | grep -i global)"
+fi
+
+if [ ! -z "${IPv6_INFO}" ]; then
+    IPv6_CUR=$(echo "${IPv6_INFO}" | sed -ne "s|^.*inet6\ \(.*\)/[0-9]*\ .*$|\1|p" | tail -n1)
+fi
 
 if [ ! -z "${IPv6_CUR}" ]; then
     for DEST in ${URL} ; do
