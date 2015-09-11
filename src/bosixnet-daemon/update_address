@@ -22,7 +22,10 @@ else
 fi
 
 if [ ! -z "${IPv6_INFO}" ]; then
+    # Get current IPv6 address using simple regexp
     IPv6_CUR=$(echo "${IPv6_INFO}" | sed -ne "s|^.*inet6\ \(.*\)/[0-9]*\ .*$|\1|p" | tail -n1)
+    # Check if this IPv6 address is valid
+    IPv6_CUR="$(echo "${IPv6_CUR}" | grep '^....:.*:.*:.*')"
 fi
 
 if [ ! -z "${IPv6_CUR}" ]; then

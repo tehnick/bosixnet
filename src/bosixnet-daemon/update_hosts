@@ -3,7 +3,7 @@
 # Config file
 CONF_FILE="/etc/bosixnet/bosixnet-daemon.conf"
 
-# Directory where generated host file is stored:
+# Directory where generated host file is stored
 LOG_DIR="/var/tmp/bosixnet"
 
 # Default web-site URL
