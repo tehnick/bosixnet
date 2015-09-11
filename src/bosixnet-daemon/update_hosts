@@ -13,6 +13,14 @@ URL="http://ipv6.example.com/bosixnet"
 [ -e "${CONF_FILE}" ] && . "${CONF_FILE}"
 
 
+# Protect file with list of hosts from simultaneous editing
+SCRIPT_NAME="$(basename ${0})"
+if [ ! -z "$(pidof -o %PPID -x ${SCRIPT_NAME})" ]; then
+    echo "Another instance of ${SCRIPT_NAME} script is already running."
+    echo "Please wait until it is finished and try again."
+    exit 1
+fi
+
 HOSTS="/etc/hosts"
 FILE="${LOG_DIR}/hosts"
 
