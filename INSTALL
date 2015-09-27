@@ -7,7 +7,7 @@ gzip
 *** Runtime dependencies ***
 libfcgi -- Shared library of FastCGI
 spawn-fcgi -- A fastcgi process spawner
-curl -- command line tool for transferring data with URL syntax
+curl -- Сommand line tool for transferring data with URL syntax
 sed -- The GNU sed stream editor
 
 *** Recommended programs ***

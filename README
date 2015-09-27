@@ -1,6 +1,6 @@
 BOSixNet -- Build Own IPv6 Network
 
-Copyright: 2013-2014 Boris Pek <tehnick-8@mail.ru>
+Copyright: 2013-2015 Boris Pek <tehnick-8@mail.ru>
 License: GPLv2 or later
 
 Homepage: https://github.com/tehnick/bosixnet
@@ -58,12 +58,12 @@ Some useful links:
   https://github.com/jorti/gogoc
 
 Examples of using Web UI:
-  http://ipv6.example.com/bosixnet/my-main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de
-  http://ipv6.example.com/bosixnet/my-main-laptop
-  http://ipv6.example.com/bosixnet/my-home-pc?update=2001:0:53aa:64c:3574:128e:9291:a021
-  http://ipv6.example.com/bosixnet/my-home-pc
-  http://ipv6.example.com/bosixnet/my-wife-netbook?update=2001:0:53aa:64c:26e0:3bf2:9258:72de
-  http://ipv6.example.com/bosixnet/my-wife-netbook
+  http://ipv6.example.com/bosixnet/main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de
+  http://ipv6.example.com/bosixnet/main-laptop
+  http://ipv6.example.com/bosixnet/home-pc?update=2001:0:53aa:64c:3574:128e:9291:a021
+  http://ipv6.example.com/bosixnet/home-pc
+  http://ipv6.example.com/bosixnet/wife-netbook?update=2001:0:53aa:64c:26e0:3bf2:9258:72de
+  http://ipv6.example.com/bosixnet/wife-netbook
   http://ipv6.example.com/bosixnet/counter
   http://ipv6.example.com/bosixnet/hosts
   http://ipv6.example.com/bosixnet/
@@ -74,4 +74,14 @@ Edit file /etc/nginx/sites-available/default and paste something like this:
         fastcgi_pass   localhost:33169;
         include        /etc/nginx/fastcgi_params;
     }
+
+Example of configuring lighttpd:
+Edit file /etc/lighttpd/lighttpd.conf and paste something like this:
+fastcgi.server = ( "/bosixnet/" =>
+  (( "host" => "127.0.0.1",
+    "port" => 33169,
+    "check-local" => "disable",
+    "docroot" => "/var/tmp/bosixnet",
+  ))
+)
 
