@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 
 include_directories(${CMAKE_BINARY_DIR})
 
-add_executable (${PROJECT_NAME} main.cpp)
+add_executable (${PROJECT_NAME} bosixnet-webui.cpp)
 
 target_link_libraries (${PROJECT_NAME} fcgi)
 
