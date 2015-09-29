@@ -1,3 +1,14 @@
+--- 1.7 2015-09-30 ---
+*** common ***
+* Relicense from GPLv2 or later to Expat.
+*** bosixnet-daemon ***
+* Use `ip` tool instead of `ifconfig` for getting local IPv6 address.
+* Added ability to select specific network device for getting local IPv6
+  address. By default script searches IPv6 addresses for all network devices
+  of the system and chooses the last of them.
+* Protect file with list of hosts from simultaneous editing.
+* Additional check if current IPv6 address is valid.
+
 --- 1.6 2014-02-11 ---
 *** bosixnet-daemon ***
 * Improved simple check for validity of IPv6 addresses received from server:
