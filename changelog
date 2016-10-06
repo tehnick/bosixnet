@@ -1,6 +1,8 @@
 --- 1.8 2016-xx-xx ---
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
+* Add special page "/timestamps": it shows list of hosts and timestamps
+  of their last activity.
 
 --- 1.7 2015-09-30 ---
 *** common ***

@@ -57,16 +57,19 @@ Some useful links:
   https://en.wikipedia.org/wiki/Miredo
   https://github.com/jorti/gogoc
 
-Examples of using Web UI:
+Examples of Web UI usage:
   http://ipv6.example.com/bosixnet/main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de
   http://ipv6.example.com/bosixnet/main-laptop
   http://ipv6.example.com/bosixnet/home-pc?update=2001:0:53aa:64c:3574:128e:9291:a021
   http://ipv6.example.com/bosixnet/home-pc
   http://ipv6.example.com/bosixnet/wife-netbook?update=2001:0:53aa:64c:26e0:3bf2:9258:72de
   http://ipv6.example.com/bosixnet/wife-netbook
-  http://ipv6.example.com/bosixnet/counter
-  http://ipv6.example.com/bosixnet/hosts
+
+Service links:
   http://ipv6.example.com/bosixnet/
+  http://ipv6.example.com/bosixnet/hosts
+  http://ipv6.example.com/bosixnet/counter
+  http://ipv6.example.com/bosixnet/timestamps
 
 Example of configuring nginx:
 Edit file /etc/nginx/sites-available/default and paste something like this:

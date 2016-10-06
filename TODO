@@ -1,7 +1,5 @@
 --- TODO ---
 * Add systemd support.
-* Add optional activity info. (Special page with list of hosts and timestamps
-  of their last activity.)
 ? Rewrite daemon using c++ and libcurl.
 ? Add FreeBSD support.
 ? Add Android support.
