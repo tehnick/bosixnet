@@ -105,10 +105,10 @@ int main(int argc, char **argv)
         if (ends_with(full_path, basic_str)) {
             show_hosts();
         }
-        else if(ends_with(full_path, basic_str + "hosts")) {
+        else if (ends_with(full_path, basic_str + "hosts")) {
             show_hosts();
         }
-        else if(ends_with(full_path, basic_str + "counter")) {
+        else if (ends_with(full_path, basic_str + "counter")) {
             stringstream counter_str;
             counter_str << counter;
             show_html("Counter: " + counter_str.str());
@@ -125,10 +125,12 @@ int main(int argc, char **argv)
                     show_html("");
                 }
             }
-            else if(is_valid_ipv6_address(new_address)) {
-                hosts_map[host_name] = new_address;
+            else if (is_valid_ipv6_address(new_address)) {
+                if (hosts_map[host_name] != new_address) {
+                    hosts_map[host_name] = new_address;
+                    write_hosts();
+                }
                 show_html(new_address);
-                write_hosts();
             }
             else {
                 show_html(new_address + " is not a valid IPv6 address!");
