@@ -27,6 +27,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <ctime>
 #include <map>
 
 #include <sys/types.h>
@@ -45,6 +46,7 @@ string log_dir = "/var/tmp/bosixnet";
 string conf_file = "/etc/bosixnet/bosixnet-webui.conf";
 
 map<string, string> hosts_map;
+map<string, string> timestamps_map;
 
 bool check_options(int, char **);
 void read_options(int, char **);
@@ -53,9 +55,17 @@ void read_config();
 void show_help();
 void show_version();
 void show_html(const string &);
+void show_file(const string &);
 void show_hosts();
+void show_timestamps();
+
+void update_timestamp(const string &);
+void read_file(const string &, map<string, string> &);
 void read_hosts();
+void read_timestamps();
+void write_file(const string &, const map<string, string> &);
 void write_hosts();
+void write_timestamps();
 
 bool ends_with(const string &, const string &);
 bool starts_with(const string &, const string &);
@@ -81,6 +91,7 @@ int main(int argc, char **argv)
     }
 
     read_hosts();
+    read_timestamps();
 
     int counter = 0;
     while (FCGI_Accept() >= 0) {
@@ -108,6 +119,9 @@ int main(int argc, char **argv)
         else if (ends_with(full_path, basic_str + "hosts")) {
             show_hosts();
         }
+        else if (ends_with(full_path, basic_str + "timestamps")) {
+            show_timestamps();
+        }
         else if (ends_with(full_path, basic_str + "counter")) {
             stringstream counter_str;
             counter_str << counter;
@@ -129,6 +143,8 @@ int main(int argc, char **argv)
                 if (hosts_map[host_name] != new_address) {
                     hosts_map[host_name] = new_address;
                     write_hosts();
+                    update_timestamp(host_name);
+                    write_timestamps();
                 }
                 show_html(new_address);
             }
@@ -236,9 +252,9 @@ void show_html(const string &str)
     printf("%s", str.c_str());
 }
 
-void show_hosts()
+void show_file(const string &file_name)
 {
-    string log_file = log_dir + "/hosts";
+    string log_file = log_dir + file_name;
     string out = "File " + log_file + " is empty!";
     ifstream file;
     file.open(log_file.c_str(), ios::in);
@@ -254,23 +270,42 @@ void show_hosts()
     show_html(out);
 }
 
-void read_hosts()
+void show_hosts()
 {
-    string log_file = log_dir + "/hosts";
+    show_file("/hosts");
+}
+
+void show_timestamps()
+{
+    show_file("/timestamps");
+}
+
+void update_timestamp(const string &host_name)
+{
+    const time_t current_time = time(0);
+    const struct tm *time_info = localtime(&current_time);
+    char new_timestamp[20];
+    strftime(new_timestamp, 20, "%F_%H:%M:%S", time_info);
+    timestamps_map[host_name] = string(new_timestamp);
+}
+
+void read_file(const string &file_name, map<string, string> &map_name)
+{
+    string log_file = log_dir + file_name;
     ifstream file;
     file.open(log_file.c_str(), ios::in);
     if (file.is_open()) {
-       string buff, host, addr;
+       string buff, key, value;
        stringstream str;
        while (!file.eof()) {
             getline(file, buff);
             str.clear();
             str << buff;
-            str >> addr;
-            str >> host;
-            if (!addr.empty() && !host.empty()){
-                if (is_valid_ipv6_address(addr)){
-                    hosts_map[host] = addr;
+            str >> value;
+            str >> key;
+            if (!value.empty() && !key.empty()) {
+                if (is_valid_ipv6_address(value)) {
+                    map_name[key] = value;
                 }
             }
         }
@@ -278,7 +313,17 @@ void read_hosts()
     }
 }
 
-void write_hosts()
+void read_hosts()
+{
+    read_file("/hosts", hosts_map);
+}
+
+void read_timestamps()
+{
+    read_file("/timestamps", timestamps_map);
+}
+
+void write_file(const string &file_name, const map<string, string> &map_name)
 {
     struct stat info;
     if (stat(log_dir.c_str(), &info)) {
@@ -287,15 +332,25 @@ void write_hosts()
             return;
         }
     }
-    string log_file = log_dir + "/hosts";
+    string log_file = log_dir + file_name;
     ofstream file;
     file.open(log_file.c_str(), ios::out);
     if (file.is_open()) {
-        for (map<string, string>::iterator it = hosts_map.begin(); it != hosts_map.end(); ++it) {
-            file <<  it->second << " " << it->first << "\n";
+        for (map<string, string>::const_iterator it = map_name.cbegin(); it != map_name.cend(); ++it) {
+            file <<  it->second << "    " << it->first << "\n";
         }
         file.close();
     }
+}
+
+void write_hosts()
+{
+    write_file("/hosts", hosts_map);
+}
+
+void write_timestamps()
+{
+    write_file("/timestamps", timestamps_map);
 }
 
 bool ends_with(const string &str, const string &sfx)
