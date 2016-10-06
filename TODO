@@ -3,5 +3,6 @@
 ? Rewrite daemon using c++ and libcurl.
 ? Add FreeBSD support.
 ? Add Android support.
+? Add Ubuntu Touch support.
 ? Add MS Windows support.
 ? Add OS X support.
