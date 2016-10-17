@@ -55,10 +55,7 @@ void read_config();
 void show_help();
 void show_version();
 void show_html(const string &);
-void show_file(const string &);
 void show_map(const map<string, string> &);
-void show_hosts_file();
-void show_timestamps_file();
 void show_hosts_map();
 void show_timestamps_map();
 
@@ -117,19 +114,13 @@ int main(int argc, char **argv)
 
         string full_path = get_env_var("SCRIPT_NAME");
         if (ends_with(full_path, basic_str)) {
-            show_hosts_file();
+            show_hosts_map();
         }
         else if (ends_with(full_path, basic_str + "hosts")) {
             show_hosts_map();
         }
         else if (ends_with(full_path, basic_str + "timestamps")) {
             show_timestamps_map();
-        }
-        else if (ends_with(full_path, basic_str + "hosts-file")) {
-            show_hosts_file();
-        }
-        else if (ends_with(full_path, basic_str + "timestamps-file")) {
-            show_timestamps_file();
         }
         else if (ends_with(full_path, basic_str + "counter")) {
             stringstream counter_str;
@@ -261,26 +252,6 @@ void show_html(const string &str)
     printf("%s", str.c_str());
 }
 
-void show_file(const string &file_name)
-{
-    string log_file = log_dir + file_name;
-    string out = "File " + log_file + " is empty!";
-    ifstream file;
-    file.open(log_file.c_str(), ios::in);
-    if (file.is_open()) {
-        out.clear();
-        string buff;
-        while (!file.eof()) {
-            getline(file, buff);
-            if (!buff.empty()) {
-                out += buff + "<br>\n";
-            }
-        }
-        file.close();
-    }
-    show_html(out);
-}
-
 void show_map(const map<string, string> &map_name)
 {
     string out;
@@ -288,16 +259,6 @@ void show_map(const map<string, string> &map_name)
         out += it->second + "    " + it->first + "<br>\n";
     }
     show_html(out);
-}
-
-void show_hosts_file()
-{
-    show_file("/hosts");
-}
-
-void show_timestamps_file()
-{
-    show_file("/timestamps");
 }
 
 void show_hosts_map()
