@@ -56,11 +56,15 @@ void show_help();
 void show_version();
 void show_html(const string &);
 void show_file(const string &);
-void show_hosts();
-void show_timestamps();
+void show_map(const map<string, string> &);
+void show_hosts_file();
+void show_timestamps_file();
+void show_hosts_map();
+void show_timestamps_map();
 
 void update_timestamp(const string &);
-void read_file(const string &, map<string, string> &);
+void read_file(const string &, map<string, string> &,
+               bool (*is_valid)(const string &));
 void read_hosts();
 void read_timestamps();
 void write_file(const string &, const map<string, string> &);
@@ -70,6 +74,7 @@ void write_timestamps();
 bool ends_with(const string &, const string &);
 bool starts_with(const string &, const string &);
 bool is_valid_ipv6_address(const string &);
+bool is_valid_timestamp(const string &);
 
 string get_env_var(const string &);
 string get_param(const string &, const string &);
@@ -111,16 +116,20 @@ int main(int argc, char **argv)
         };
 
         string full_path = get_env_var("SCRIPT_NAME");
-        string path = get_env_var("SCRIPT_FULL_PATHNAME");
-
         if (ends_with(full_path, basic_str)) {
-            show_hosts();
+            show_hosts_file();
         }
         else if (ends_with(full_path, basic_str + "hosts")) {
-            show_hosts();
+            show_hosts_map();
         }
         else if (ends_with(full_path, basic_str + "timestamps")) {
-            show_timestamps();
+            show_timestamps_map();
+        }
+        else if (ends_with(full_path, basic_str + "hosts-file")) {
+            show_hosts_file();
+        }
+        else if (ends_with(full_path, basic_str + "timestamps-file")) {
+            show_timestamps_file();
         }
         else if (ends_with(full_path, basic_str + "counter")) {
             stringstream counter_str;
@@ -130,7 +139,7 @@ int main(int argc, char **argv)
         else {
             string host_name = full_path.substr(full_path.rfind("/") + 1);
             string new_address = get_param(content, "update=");
-            if (new_address.empty()) { 
+            if (new_address.empty()) {
                 map<string, string>::iterator it = hosts_map.find(host_name);
                 if (it != hosts_map.end()) {
                     show_html(it->second);
@@ -200,8 +209,8 @@ void read_config()
     ifstream file;
     file.open(conf_file.c_str(), ios::in);
     if (file.is_open()) {
-       string buff, var, tmp;
-       while (!file.eof()) {
+        string buff, var, tmp;
+        while (!file.eof()) {
             getline(file, buff);
             buff = remove_extra_symbols(buff, " \t");
             if (buff.size() >= 3 && buff.at(0) != '#') {
@@ -263,21 +272,42 @@ void show_file(const string &file_name)
         string buff;
         while (!file.eof()) {
             getline(file, buff);
-            out += buff + "<br>\n";
+            if (!buff.empty()) {
+                out += buff + "<br>\n";
+            }
         }
         file.close();
     }
     show_html(out);
 }
 
-void show_hosts()
+void show_map(const map<string, string> &map_name)
+{
+    string out;
+    for (map<string, string>::const_iterator it = map_name.cbegin(); it != map_name.cend(); ++it) {
+        out += it->second + "    " + it->first + "<br>\n";
+    }
+    show_html(out);
+}
+
+void show_hosts_file()
 {
     show_file("/hosts");
 }
 
-void show_timestamps()
+void show_timestamps_file()
 {
     show_file("/timestamps");
+}
+
+void show_hosts_map()
+{
+    show_map(hosts_map);
+}
+
+void show_timestamps_map()
+{
+    show_map(timestamps_map);
 }
 
 void update_timestamp(const string &host_name)
@@ -289,22 +319,23 @@ void update_timestamp(const string &host_name)
     timestamps_map[host_name] = string(new_timestamp);
 }
 
-void read_file(const string &file_name, map<string, string> &map_name)
+void read_file(const string &file_name, map<string, string> &map_name,
+               bool (*is_valid)(const string &))
 {
     string log_file = log_dir + file_name;
     ifstream file;
     file.open(log_file.c_str(), ios::in);
     if (file.is_open()) {
-       string buff, key, value;
-       stringstream str;
-       while (!file.eof()) {
+        string buff, key, value;
+        stringstream str;
+        while (!file.eof()) {
             getline(file, buff);
             str.clear();
             str << buff;
             str >> value;
             str >> key;
             if (!value.empty() && !key.empty()) {
-                if (is_valid_ipv6_address(value)) {
+                if (is_valid(value)) {
                     map_name[key] = value;
                 }
             }
@@ -315,12 +346,12 @@ void read_file(const string &file_name, map<string, string> &map_name)
 
 void read_hosts()
 {
-    read_file("/hosts", hosts_map);
+    read_file("/hosts", hosts_map, is_valid_ipv6_address);
 }
 
 void read_timestamps()
 {
-    read_file("/timestamps", timestamps_map);
+    read_file("/timestamps", timestamps_map, is_valid_timestamp);
 }
 
 void write_file(const string &file_name, const map<string, string> &map_name)
@@ -390,6 +421,28 @@ bool is_valid_ipv6_address(const string &str)
         return false;
 
     if (str.find_first_not_of(":0123456789abcdefABCDEF") != string::npos)
+        return false;
+
+    return true;
+}
+
+bool is_valid_timestamp(const string &str)
+{
+    if (str.size() != 19)
+        return false;
+
+    if (str.at(4) != '-')
+        return false;
+    else if (str.at(7) != '-')
+        return false;
+    else if (str.at(10) != '_')
+        return false;
+    else if (str.at(13) != ':')
+        return false;
+    else if (str.at(16) != ':')
+        return false;
+
+    if (str.find_first_not_of("_-:0123456789") != string::npos)
         return false;
 
     return true;

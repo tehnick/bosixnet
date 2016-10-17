@@ -1,8 +1,12 @@
 --- 1.8 2016-xx-xx ---
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
-* Add special page "/timestamps": it shows list of hosts and timestamps
-  of their last activity.
+* Add special page "/timestamps": it shows list of hosts and timestamps of
+  their last activity.
+* Use show_map() instead of show_file() for "/hosts" and "/timestamps" pages.
+  This allows to decrease the number of disk I/O operations and works faster
+  (even with comparing with reading from modern SSD drive connected via SATA 3).
+  [TODO: add link to tests results]
 
 --- 1.7 2015-09-30 ---
 *** common ***
