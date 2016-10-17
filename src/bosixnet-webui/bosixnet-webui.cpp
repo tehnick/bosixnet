@@ -39,7 +39,13 @@
 
 #include "Version.h"
 
-using namespace std;
+using std::map;
+using std::string;
+using std::stringstream;
+using std::ifstream;
+using std::ofstream;
+using std::ios;
+using std::cout;
 
 string basic_str = "/bosixnet/";
 string log_dir = "/var/tmp/bosixnet";
@@ -84,7 +90,7 @@ int main(int argc, char **argv)
         return 0;
 
     // Settings in config file have lower priority than command line options.
-    string conf_file_default = conf_file;
+    const string conf_file_default = conf_file;
     read_config();
     read_options(argc, argv);
     if (conf_file != conf_file_default) {
@@ -100,7 +106,7 @@ int main(int argc, char **argv)
         ++counter;
 
         string content;
-        string request_method = get_env_var("REQUEST_METHOD");
+        const string request_method = get_env_var("REQUEST_METHOD");
         if (request_method.empty()) {
             continue;
         }
@@ -112,7 +118,7 @@ int main(int argc, char **argv)
             continue;
         };
 
-        string full_path = get_env_var("SCRIPT_NAME");
+        const string full_path = get_env_var("SCRIPT_NAME");
         if (ends_with(full_path, basic_str)) {
             show_hosts_map();
         }
@@ -128,10 +134,10 @@ int main(int argc, char **argv)
             show_html("Counter: " + counter_str.str());
         }
         else {
-            string host_name = full_path.substr(full_path.rfind("/") + 1);
-            string new_address = get_param(content, "update=");
+            const string host_name = full_path.substr(full_path.rfind("/") + 1);
+            const string new_address = get_param(content, "update=");
             if (new_address.empty()) {
-                map<string, string>::iterator it = hosts_map.find(host_name);
+                const auto it = hosts_map.find(host_name);
                 if (it != hosts_map.end()) {
                     show_html(it->second);
                 }
@@ -243,7 +249,7 @@ void show_help()
 
 void show_version()
 {
-    cout << "Version: " << string(VERSION) << "\n";
+    cout << "Version: " << VERSION << "\n";
 }
 
 void show_html(const string &str)
@@ -255,8 +261,8 @@ void show_html(const string &str)
 void show_map(const map<string, string> &map_name)
 {
     string out;
-    for (map<string, string>::const_iterator it = map_name.cbegin(); it != map_name.cend(); ++it) {
-        out += it->second + "    " + it->first + "<br>\n";
+    for (const auto &it : map_name) {
+        out += it.second + "    " + it.first + "<br>\n";
     }
     show_html(out);
 }
@@ -283,7 +289,7 @@ void update_timestamp(const string &host_name)
 void read_file(const string &file_name, map<string, string> &map_name,
                bool (*is_valid)(const string &))
 {
-    string log_file = log_dir + file_name;
+    const string log_file = log_dir + file_name;
     ifstream file;
     file.open(log_file.c_str(), ios::in);
     if (file.is_open()) {
@@ -324,12 +330,12 @@ void write_file(const string &file_name, const map<string, string> &map_name)
             return;
         }
     }
-    string log_file = log_dir + file_name;
+    const string log_file = log_dir + file_name;
     ofstream file;
     file.open(log_file.c_str(), ios::out);
     if (file.is_open()) {
-        for (map<string, string>::const_iterator it = map_name.cbegin(); it != map_name.cend(); ++it) {
-            file <<  it->second << "    " << it->first << "\n";
+        for (const auto &it : map_name) {
+            file <<  it.second << "    " << it.first << "\n";
         }
         file.close();
     }
@@ -363,7 +369,7 @@ bool starts_with(const string &str, const string &pfx)
 
 bool is_valid_ipv6_address(const string &str)
 {
-    size_t len = str.size();
+    const size_t len = str.size();
     if (len < 8)
         return false;
     else if (len > 39)
@@ -411,7 +417,7 @@ bool is_valid_timestamp(const string &str)
 
 string get_env_var(const string &var)
 {
-    char *ptr = getenv(var.c_str());
+    const char *ptr = getenv(var.c_str());
     return (ptr ? string(ptr) : "");
 }
 
@@ -432,7 +438,7 @@ string get_param(const string &buff, const string &name)
     if (param_end == string::npos)
         param_end = buff.size();
 
-    string out = buff.substr(param_begin, param_end - param_begin);
+    const string out = buff.substr(param_begin, param_end - param_begin);
     return out;
 }
 

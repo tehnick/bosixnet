@@ -1,4 +1,4 @@
 #pragma once
 
-#define VERSION "@VERSION@"
+#define VERSION string("@VERSION@")
 

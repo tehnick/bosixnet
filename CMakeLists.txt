@@ -4,6 +4,8 @@ cmake_minimum_required (VERSION 2.8)
 set (PROJECT_NAME "BOSixNet")
 set (VERSION "1.7")
 
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
+
 add_subdirectory (src/bosixnet-daemon)
 add_subdirectory (src/bosixnet-webui)
 
