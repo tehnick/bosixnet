@@ -66,6 +66,7 @@ void show_map(const map<string, string> &);
 void show_hosts_map();
 void show_timestamps_map();
 
+void update_prefix_str(const string &);
 void update_timestamp(const string &);
 void read_file(const string &, map<string, string> &,
                bool (*is_valid)(const string &));
@@ -198,7 +199,7 @@ void read_options(int argc, char **argv)
             arg = argv[idx];
             arg_next = argv[idx + 1];
             if (arg == "-b" || arg == "--prefix-str") {
-                prefix_str = arg_next;
+                update_prefix_str(arg_next);
             }
             if (arg == "-t" || arg == "--host-str") {
                 host_str = arg_next;
@@ -226,7 +227,7 @@ void read_config()
                 var = "PREFIX_STR";
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
-                    prefix_str = tmp;
+                    update_prefix_str(tmp);
                 }
                 var = "HOST_STR";
                 tmp = get_conf_var(buff, var);
@@ -293,6 +294,15 @@ void show_hosts_map()
 void show_timestamps_map()
 {
     show_map(timestamps_map);
+}
+
+
+void update_prefix_str(const string &new_prefix_str)
+{
+    prefix_str = new_prefix_str;
+    if (prefix_str.at(prefix_str.size()-1) != '/') {
+        prefix_str.push_back('/');
+    }
 }
 
 void update_timestamp(const string &host_name)

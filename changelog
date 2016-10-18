@@ -2,6 +2,7 @@
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
 * Rename BASIC_STR variable to PREFIX_STR.
+* Add check that PREFIX_STR is always terminated by '/' character.
 * Add special page "/timestamps": it shows list of hosts and timestamps of
   their last activity.
 * Use show_map() instead of show_file() for "/hosts" and "/timestamps" pages.
