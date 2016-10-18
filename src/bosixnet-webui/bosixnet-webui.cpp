@@ -147,6 +147,7 @@ int main(int argc, char **argv)
             if (new_address.empty()) {
                 const auto it = hosts_map.find(host_name);
                 if (it != hosts_map.end()) {
+                    update_timestamp(host_name);
                     show_html(it->second);
                 }
                 else {
@@ -154,10 +155,10 @@ int main(int argc, char **argv)
                 }
             }
             else if (is_valid_ipv6_address(new_address)) {
+                update_timestamp(host_name);
                 if (hosts_map[host_name] != new_address) {
                     hosts_map[host_name] = new_address;
                     write_hosts();
-                    update_timestamp(host_name);
                     write_timestamps();
                 }
                 show_html(new_address);
