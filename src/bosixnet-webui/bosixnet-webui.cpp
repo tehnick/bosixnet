@@ -47,8 +47,9 @@ using std::ofstream;
 using std::ios;
 using std::cout;
 
+string host_str  = "";
 string basic_str = "/bosixnet/";
-string log_dir = "/var/tmp/bosixnet";
+string log_dir   = "/var/tmp/bosixnet";
 string conf_file = "/etc/bosixnet/bosixnet-webui.conf";
 
 map<string, string> hosts_map;
@@ -117,6 +118,13 @@ int main(int argc, char **argv)
             show_html("<center><h2>Only GET request method is allowed!</h2></center>\n");
             continue;
         };
+
+        if (!host_str.empty()) {
+            const string http_host = get_env_var("HTTP_HOST");
+            if (http_host != host_str) {
+                continue;
+            }
+        }
 
         const string full_path = get_env_var("SCRIPT_NAME");
         if (ends_with(full_path, basic_str)) {
@@ -215,6 +223,11 @@ void read_config()
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
                     basic_str = tmp;
+                }
+                var = "HOST_STR";
+                tmp = get_conf_var(buff, var);
+                if (!tmp.empty()) {
+                    host_str = tmp;
                 }
                 var = "LOG_DIR";
                 tmp = get_conf_var(buff, var);

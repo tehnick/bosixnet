@@ -7,6 +7,11 @@
   This allows to decrease the number of disk I/O operations and works faster
   (even with comparing with reading from modern SSD drive connected via SATA 3).
   [TODO: add link to tests results]
+* Add ability to check HTTP_HOST variable for incoming connections. It might be
+  useful when there are few websites hosted on a same server and you prefer to
+  use domain names for separating them instead of using of single domain name
+  with different URL prefixes. (See HOST_STR and BASIC_STR config variables
+  or --basic-str and --host-str command-line options accordingly.)
 * Code refactoring.
 
 --- 1.7 2015-09-30 ---
