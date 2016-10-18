@@ -199,6 +199,9 @@ void read_options(int argc, char **argv)
             if (arg == "-b" || arg == "--prefix-str") {
                 prefix_str = arg_next;
             }
+            if (arg == "-t" || arg == "--host-str") {
+                host_str = arg_next;
+            }
             else if (arg == "-l" || arg == "--log-dir") {
                 log_dir = arg_next;
             }
@@ -254,6 +257,7 @@ void show_help()
             "\n"
             "Options:\n"
             "  -b <string>, --prefix-str <string>  set url prefix (default: " + prefix_str + ")\n"
+            "  -t <string>, --host-str <string>    set host string (default: empty string)\n"
             "  -l <dir>, --log-dir <dir>           set log directory (default: " + log_dir + ")\n"
             "  -c <file>, --conf-file <file>       set config file (default: " + conf_file + ")\n"
             "\n"
