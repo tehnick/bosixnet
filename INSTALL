@@ -4,11 +4,13 @@ libfcgi-dev (>= 2.4)
 cmake (>= 2.8)
 gzip
 
+
 *** Runtime dependencies ***
 libfcgi -- Shared library of FastCGI
 spawn-fcgi -- A fastcgi process spawner
 curl -- Сommand line tool for transferring data with URL syntax
 sed -- The GNU sed stream editor
+
 
 *** Recommended programs ***
 miredo -- Teredo IPv6 tunneling through NATs
@@ -17,6 +19,7 @@ gogoc -- Client to connect to IPv6 tunnel brokers
 You do not need any of these programs if your Internet provider gives you
 direct access to IPv6 network. Unfortunately this is too rare situation now.
 
+
 *** Build ***
 mkdir -p builddir
 cd builddir
@@ -24,6 +27,49 @@ cmake -DCMAKE_BUILD_TYPE=Release  -DCMAKE_INSTALL_PREFIX=/usr ..
 make
 sudo make install
 
-*** Build options ***
+
+*** Extra build options ***
 -DCMAKE_BUILD_TYPE={Release, RelWithDebInfo, Debug, MinRelSize}
+
+
+*** Configuration files ***
+/etc/bosixnet/bosixnet-daemon.conf
+/etc/bosixnet/bosixnet-webui.conf
+
+
+*** Example of FastCGI settings in Nginx ***
+Edit file /etc/nginx/sites-available/default and paste something like this:
+
+    location /bosixnet/ {
+        fastcgi_pass   localhost:33169;
+        include        /etc/nginx/fastcgi_params;
+    }
+
+
+*** Example of FastCGI settings in lighttpd ***
+Edit file /etc/lighttpd/lighttpd.conf and paste something like this:
+
+fastcgi.server = ( "/bosixnet/" =>
+  (( "host" => "127.0.0.1",
+    "port" => 33169,
+    "check-local" => "disable",
+    "docroot" => "/var/tmp/bosixnet",
+  ))
+)
+
+
+*** Examples of Web UI usage with default settings ***
+Main usage:
+  http://ipv6.example.com/bosixnet/main-laptop?update=2001:0:53aa:64c:2f53:5e65:9258:72de
+  http://ipv6.example.com/bosixnet/main-laptop
+  http://ipv6.example.com/bosixnet/home-pc?update=2001:0:53aa:64c:3574:128e:9291:a021
+  http://ipv6.example.com/bosixnet/home-pc
+  http://ipv6.example.com/bosixnet/wife-netbook?update=2001:0:53aa:64c:26e0:3bf2:9258:72de
+  http://ipv6.example.com/bosixnet/wife-netbook
+
+Service links:
+  http://ipv6.example.com/bosixnet/
+  http://ipv6.example.com/bosixnet/hosts
+  http://ipv6.example.com/bosixnet/timestamps
+  http://ipv6.example.com/bosixnet/counter
 
