@@ -47,10 +47,10 @@ using std::ofstream;
 using std::ios;
 using std::cout;
 
-string host_str  = "";
-string basic_str = "/bosixnet/";
-string log_dir   = "/var/tmp/bosixnet";
-string conf_file = "/etc/bosixnet/bosixnet-webui.conf";
+string host_str   = "";
+string prefix_str = "/bosixnet/";
+string log_dir    = "/var/tmp/bosixnet";
+string conf_file  = "/etc/bosixnet/bosixnet-webui.conf";
 
 map<string, string> hosts_map;
 map<string, string> timestamps_map;
@@ -127,16 +127,16 @@ int main(int argc, char **argv)
         }
 
         const string full_path = get_env_var("SCRIPT_NAME");
-        if (ends_with(full_path, basic_str)) {
+        if (ends_with(full_path, prefix_str)) {
             show_hosts_map();
         }
-        else if (ends_with(full_path, basic_str + "hosts")) {
+        else if (ends_with(full_path, prefix_str + "hosts")) {
             show_hosts_map();
         }
-        else if (ends_with(full_path, basic_str + "timestamps")) {
+        else if (ends_with(full_path, prefix_str + "timestamps")) {
             show_timestamps_map();
         }
-        else if (ends_with(full_path, basic_str + "counter")) {
+        else if (ends_with(full_path, prefix_str + "counter")) {
             stringstream counter_str;
             counter_str << counter;
             show_html("Counter: " + counter_str.str());
@@ -196,8 +196,8 @@ void read_options(int argc, char **argv)
         for (int idx = 1 ; idx < argc - 1 ; ++idx) {
             arg = argv[idx];
             arg_next = argv[idx + 1];
-            if (arg == "-b" || arg == "--basic-str") {
-                basic_str = arg_next;
+            if (arg == "-b" || arg == "--prefix-str") {
+                prefix_str = arg_next;
             }
             else if (arg == "-l" || arg == "--log-dir") {
                 log_dir = arg_next;
@@ -219,10 +219,10 @@ void read_config()
             getline(file, buff);
             buff = remove_extra_symbols(buff, " \t");
             if (buff.size() >= 3 && buff.at(0) != '#') {
-                var = "BASIC_STR";
+                var = "PREFIX_STR";
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
-                    basic_str = tmp;
+                    prefix_str = tmp;
                 }
                 var = "HOST_STR";
                 tmp = get_conf_var(buff, var);
@@ -253,9 +253,9 @@ void show_help()
             "  -v, --version  show version\n"
             "\n"
             "Options:\n"
-            "  -b <string>, --basic-str <string>  set basic url (default: " + basic_str + ")\n"
-            "  -l <dir>, --log-dir <dir>          set log directory (default: " + log_dir + ")\n"
-            "  -c <file>, --conf-file <file>      set config file (default: " + conf_file + ")\n"
+            "  -b <string>, --prefix-str <string>  set url prefix (default: " + prefix_str + ")\n"
+            "  -l <dir>, --log-dir <dir>           set log directory (default: " + log_dir + ")\n"
+            "  -c <file>, --conf-file <file>       set config file (default: " + conf_file + ")\n"
             "\n"
             "Settings in config file have lower priority than command line options.\n";
 }

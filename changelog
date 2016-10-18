@@ -1,6 +1,7 @@
 --- 1.8 2016-xx-xx ---
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
+* Rename BASIC_STR variable to PREFIX_STR.
 * Add special page "/timestamps": it shows list of hosts and timestamps of
   their last activity.
 * Use show_map() instead of show_file() for "/hosts" and "/timestamps" pages.
@@ -10,8 +11,8 @@
 * Add ability to check HTTP_HOST variable for incoming connections. It might be
   useful when there are few websites hosted on a same server and you prefer to
   use domain names for separating them instead of using of single domain name
-  with different URL prefixes. (See HOST_STR and BASIC_STR config variables
-  or --basic-str and --host-str command-line options accordingly.)
+  with different URL prefixes. (See HOST_STR and PREFIX_STR config variables
+  or --prefix-str and --host-str command-line options accordingly.)
 * Code refactoring.
 
 --- 1.7 2015-09-30 ---
