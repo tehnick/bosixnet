@@ -47,7 +47,6 @@ using std::ofstream;
 using std::ios;
 using std::cout;
 
-string host_str   = "";
 string prefix_str = "/bosixnet/";
 string log_dir    = "/var/tmp/bosixnet";
 string conf_file  = "/etc/bosixnet/bosixnet-webui.conf";
@@ -119,13 +118,6 @@ int main(int argc, char **argv)
             show_html("<center><h2>Only GET request method is allowed!</h2></center>\n");
             continue;
         };
-
-        if (!host_str.empty()) {
-            const string http_host = get_env_var("HTTP_HOST");
-            if (http_host != host_str) {
-                continue;
-            }
-        }
 
         const string full_path = get_env_var("SCRIPT_NAME");
         if (ends_with(full_path, prefix_str)) {
@@ -201,9 +193,6 @@ void read_options(int argc, char **argv)
             if (arg == "-b" || arg == "--prefix-str") {
                 update_prefix_str(arg_next);
             }
-            if (arg == "-t" || arg == "--host-str") {
-                host_str = arg_next;
-            }
             else if (arg == "-l" || arg == "--log-dir") {
                 log_dir = arg_next;
             }
@@ -228,11 +217,6 @@ void read_config()
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
                     update_prefix_str(tmp);
-                }
-                var = "HOST_STR";
-                tmp = get_conf_var(buff, var);
-                if (!tmp.empty()) {
-                    host_str = tmp;
                 }
                 var = "LOG_DIR";
                 tmp = get_conf_var(buff, var);
@@ -259,8 +243,7 @@ void show_help()
             "\n"
             "Options:\n"
             "  -b <string>, --prefix-str <string>  set url prefix (default: " + prefix_str + ")\n"
-            "  -t <string>, --host-str <string>    set host string (default: empty string)\n"
-            "  -l <dir>, --log-dir <dir>           set log directory (default: " + log_dir + ")\n"
+            "  -l <dir>, --log-dir <dir>           set directory for auxiliary files (default: " + log_dir + ")\n"
             "  -c <file>, --conf-file <file>       set config file (default: " + conf_file + ")\n"
             "\n"
             "Settings in config file have lower priority than command line options.\n";
