@@ -213,6 +213,14 @@ void read_config()
             getline(file, buff);
             buff = remove_extra_symbols(buff, " \t");
             if (buff.size() >= 3 && buff.at(0) != '#') {
+                // This block is added for back compatibility:
+                {   // TODO: delete later
+                    var = "BASIC_STR";
+                    tmp = get_conf_var(buff, var);
+                    if (!tmp.empty()) {
+                        update_prefix_str(tmp);
+                    }
+                }
                 var = "PREFIX_STR";
                 tmp = get_conf_var(buff, var);
                 if (!tmp.empty()) {
