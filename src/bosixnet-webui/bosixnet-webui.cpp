@@ -300,8 +300,8 @@ void update_timestamp(const string &host_name)
 {
     const time_t current_time = time(0);
     const struct tm *time_info = localtime(&current_time);
-    char new_timestamp[20];
-    strftime(new_timestamp, 20, "%F_%H:%M:%S", time_info);
+    char new_timestamp[26];
+    strftime(new_timestamp, 26, "%F_%H:%M:%S_%z", time_info);
     timestamps_map[host_name] = string(new_timestamp);
 }
 
@@ -414,7 +414,7 @@ bool is_valid_ipv6_address(const string &str)
 
 bool is_valid_timestamp(const string &str)
 {
-    if (str.size() != 19)
+    if (str.size() != 25)
         return false;
 
     if (str.at(4) != '-')
@@ -427,8 +427,12 @@ bool is_valid_timestamp(const string &str)
         return false;
     else if (str.at(16) != ':')
         return false;
+    else if (str.at(19) != '_')
+        return false;
+    else if (str.at(20) != '+')
+        return false;
 
-    if (str.find_first_not_of("_-:0123456789") != string::npos)
+    if (str.find_first_not_of("_+-:0123456789") != string::npos)
         return false;
 
     return true;
