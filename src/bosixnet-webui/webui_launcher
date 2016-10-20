@@ -10,9 +10,6 @@ GROUPID=bosixnet
 # TCP port for binding on localhost
 FCGIPORT=33169
 
-# Number of children to spawn
-FCGI_CHILDREN=5
-
 # ABSOLUTE path to the spawn-fcgi binary
 SPAWNFCGI="/usr/bin/spawn-fcgi"
 
@@ -37,8 +34,7 @@ if ! id -g ${GROUPID} &> /dev/null; then
 fi
 
 # spawn-fcgi command-line options
-EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -C ${FCGI_CHILDREN}"
-[ "${UID}" = "0" ] && EX="${EX} -u ${USERID} -g ${GROUPID}"
+EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -u ${USERID} -g ${GROUPID}"
 
 # Clean the environment, set up a new one and launch the program
 env - ${E} ${EX} &> /dev/null

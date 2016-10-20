@@ -7,6 +7,7 @@
 * Provide unique default value of HOST_NAME variable. But manual setup is more
   preferable in any case.
 *** bosixnet-webui ***
+* Update launcher script.
 * Update hosts map only when host address is really changed.
 * Rename BASIC_STR variable to PREFIX_STR.
 * Add check that PREFIX_STR is always terminated by '/' character.
