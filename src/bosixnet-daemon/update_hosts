@@ -50,6 +50,3 @@ cp -f "${HOSTS}" "${HOSTS}.backup"
 cat "${HOSTS}.backup" | grep -v '^....:.*:.*:.*' | tee "${HOSTS}" > /dev/null
 echo "${CUR_INFO}" | tee -a "${HOSTS}" > /dev/null
 
-echo "There are such data in ${HOSTS} now:"
-cat "${HOSTS}"
-

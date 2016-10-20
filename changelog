@@ -3,6 +3,9 @@
 * Add basic systemd support.
 * Add WITH_SYSVINIT_SUPPORT, WITH_SYSTEMD_SUPPORT, SYSVINIT_SCRIPTS_DIR and
   SYSTEMD_UNIT_FILES_DIR cmake configuration options.
+*** bosixnet-daemon ***
+* Provide unique default value of HOST_NAME variable. But manual setup is more
+  preferable in any case.
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
 * Rename BASIC_STR variable to PREFIX_STR.
