@@ -1,5 +1,5 @@
 [Unit]
-Description=BOSixNet daemon
+Description=BOSixNet client
 After=network.target
 
 [Service]

@@ -14,7 +14,7 @@
 # Last updated: 2016-10-21
 
 NAME=bosixnet_daemon
-DESC="BOSixNet daemon"
+DESC="BOSixNet client"
 DAEMON=/usr/lib/bosixnet/daemon_launcher
 DAEMON_OPTS=
 SCRIPT=bosixnet-daemon
