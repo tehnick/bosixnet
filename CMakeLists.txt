@@ -6,6 +6,23 @@ set (VERSION "1.7")
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
+option (WITH_SYSVINIT_SUPPORT "Install sysvinit scripts" ON)
+option (WITH_SYSTEMD_SUPPORT "Install systemd unit configuration files" ON)
+
+if (WITH_SYSVINIT_SUPPORT)
+    if (NOT SYSVINIT_SCRIPTS_DIR)
+        set (SYSVINIT_SCRIPTS_DIR "/etc/init.d/")
+    endif (NOT SYSVINIT_SCRIPTS_DIR)
+    message (STATUS "SysVinit scripts will be installed to: ${SYSVINIT_SCRIPTS_DIR}")
+endif (WITH_SYSVINIT_SUPPORT)
+
+if (WITH_SYSTEMD_SUPPORT)
+    if (NOT SYSTEMD_UNIT_FILES_DIR)
+        set (SYSTEMD_UNIT_FILES_DIR "/lib/systemd/system/")
+    endif (NOT SYSTEMD_UNIT_FILES_DIR)
+    message (STATUS "Systemd unit configuration files will be installed to: ${SYSTEMD_UNIT_FILES_DIR}")
+endif (WITH_SYSTEMD_SUPPORT)
+
 add_subdirectory (src/bosixnet-daemon)
 add_subdirectory (src/bosixnet-webui)
 

@@ -1,4 +1,8 @@
 --- 1.8 2016-xx-xx ---
+*** common ***
+* Add basic systemd support.
+* Add WITH_SYSVINIT_SUPPORT, WITH_SYSTEMD_SUPPORT, SYSVINIT_SCRIPTS_DIR and
+  SYSTEMD_UNIT_FILES_DIR cmake configuration options.
 *** bosixnet-webui ***
 * Update hosts map only when host address is really changed.
 * Rename BASIC_STR variable to PREFIX_STR.

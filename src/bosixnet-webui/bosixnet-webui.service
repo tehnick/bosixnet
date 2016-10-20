@@ -1,0 +1,11 @@
+[Unit]
+Description=BOSixNet server
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/lib/bosixnet/webui_launcher
+ExecStop=killall -9 bosixnet_webui
+
+[Install]
+WantedBy=multi-user.target

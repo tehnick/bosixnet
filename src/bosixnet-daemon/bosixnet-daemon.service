@@ -1,0 +1,9 @@
+[Unit]
+Description=BOSixNet daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/bosixnet_daemon
+
+[Install]
+WantedBy=multi-user.target

@@ -1,5 +1,4 @@
 --- TODO ---
-* Add systemd support.
 ? Rewrite daemon using c++ and libcurl.
 ? Add FreeBSD support.
 ? Add Android support.
