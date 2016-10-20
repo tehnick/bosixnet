@@ -41,5 +41,5 @@ EX="${SPAWNFCGI} -p ${FCGIPORT} -f ${FCGIPROGRAM} -C ${FCGI_CHILDREN}"
 [ "${UID}" = "0" ] && EX="${EX} -u ${USERID} -g ${GROUPID}"
 
 # Clean the environment, set up a new one and launch the program
-env - ${E} ${EX} >/dev/null 2>&1
+env - ${E} ${EX} &> /dev/null
 

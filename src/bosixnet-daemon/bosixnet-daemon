@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 # Author: Boris Pek
-# Last updated: 2014-02-04
+# Last updated: 2016-10-21
 
 NAME=bosixnet_daemon
 DESC="BOSixNet daemon"
@@ -41,7 +41,7 @@ check_stop() {
     set +e
     DAEMON_PID="$(pidof -x ${NAME})"
     if [ ! -z "${DAEMON_PID}" ]; then
-        killall -9 "${NAME}" >/dev/null 2>/dev/null
+        killall -9 "${NAME}" &>/dev/null
         sleep 1
     fi
     set -e
