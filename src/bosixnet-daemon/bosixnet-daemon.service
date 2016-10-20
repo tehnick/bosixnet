@@ -3,7 +3,8 @@ Description=BOSixNet daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/bosixnet_daemon
+Type=forking
+ExecStart=/usr/lib/bosixnet/daemon_launcher
 
 [Install]
 WantedBy=multi-user.target
