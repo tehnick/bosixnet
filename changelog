@@ -1,4 +1,4 @@
---- 1.8 2016-xx-xx ---
+--- 1.8 2016-10-22 ---
 *** common ***
 * Add basic systemd support.
 * Add WITH_SYSVINIT_SUPPORT, WITH_SYSTEMD_SUPPORT, SYSVINIT_SCRIPTS_DIR and
