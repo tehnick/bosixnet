@@ -6,7 +6,7 @@ set (VERSION "1.7")
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
-option (WITH_SYSVINIT_SUPPORT "Install sysvinit scripts" ON)
+option (WITH_SYSVINIT_SUPPORT "Install sysvinit scripts" OFF)
 option (WITH_SYSTEMD_SUPPORT "Install systemd unit configuration files" ON)
 
 if (WITH_SYSVINIT_SUPPORT)
