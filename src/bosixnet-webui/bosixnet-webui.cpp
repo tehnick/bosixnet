@@ -102,7 +102,7 @@ int main(int argc, char **argv)
     read_hosts();
     read_timestamps();
 
-    int counter = 0;
+    unsigned long long counter = 0;
     while (FCGI_Accept() >= 0) {
         ++counter;
 
