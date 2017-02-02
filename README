@@ -1,7 +1,7 @@
 BOSixNet -- Build Own IPv6 Network
 
 Copyright: 2013-2016 Boris Pek <tehnick-8@mail.ru>
-License: Expat
+License: MIT (Expat)
 
 Homepage: https://github.com/tehnick/bosixnet
 
@@ -54,6 +54,10 @@ Important notes:
    use tunnel broker or native IPv6 address.
 
 For information how to install and to use BOSixNet see file INSTALL.
+
+Screenshots:
+  https://tehnick.github.io/bosixnet/screenshots/00.png
+  https://tehnick.github.io/bosixnet/screenshots/01.png
 
 Some useful links:
   https://en.wikipedia.org/wiki/IPv6
