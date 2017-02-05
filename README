@@ -1,4 +1,4 @@
-BOSixNet -- Build Own IPv6 Network
+BOSixNet – Build Own IPv6 Network
 
 Copyright: 2013-2016 Boris Pek <tehnick-8@mail.ru>
 License: MIT (Expat)
@@ -17,10 +17,10 @@ these computers will be available via IPv6 addresses. BOSixNet includes the
 collection of tools for automatic updating the list of such hosts.
 
 Project consist of two parts:
-1) bosixnet-webui -- FastCGI program which passively listens for incoming
+1) bosixnet-webui – FastCGI program which passively listens for incoming
    connections and generates list of hosts in your IPv6 network. This daemon
    prepares data which may be put directly into /etc/hosts.
-2) bosixnet-daemon -- shell script which periodically sends information about
+2) bosixnet-daemon – shell script which periodically sends information about
    current IPv6 address to remote servers and updates local /etc/hosts file
    based on data received from these remote servers. It is expected that
    bosixnet-webui is launched on these remote servers, but it is not mandatory.
@@ -61,8 +61,6 @@ Screenshots:
 
 Some useful links:
   https://en.wikipedia.org/wiki/IPv6
-  https://en.wikipedia.org/wiki/Teredo_tunneling
   https://en.wikipedia.org/wiki/Miredo
-  https://github.com/jorti/gogoc
   https://github.com/evi1c/gogoc
 
