@@ -1,3 +1,13 @@
+--- 1.9 2017-xx-xx ---
+*** common ***
+* Disable WITH_SYSVINIT_SUPPORT configuration option by default.
+*** bosixnet-daemon ***
+* Add "-L" option to `curl` command-line tool in update_address and
+  update_hosts scripts for simplifying migration from HTTP to HTTPS and/or
+  between servers.
+*** bosixnet-webui ***
+* Tiny improvement in a counter of visits.
+
 --- 1.8 2016-10-22 ---
 *** common ***
 * Add basic systemd support.
