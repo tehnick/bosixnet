@@ -31,7 +31,7 @@ if [ -z "${CUR_INFO}" ]; then
     for DEST in ${URL} ; do
         LINK="${DEST}/hosts"
         echo "Trying to get data from ${LINK}..."
-        CUR_INFO="$(curl ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^....:.*:.*:.*')"
+        CUR_INFO="$(curl -L ${LINK} 2>/dev/null | sed 's/<br>//' | grep '^....:.*:.*:.*')"
         if [ -z "${CUR_INFO}" ]; then
             echo "Attempt to get data from ${LINK} failed."
         else

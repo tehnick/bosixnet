@@ -32,9 +32,9 @@ fi
 if [ ! -z "${IPv6_CUR}" ]; then
     for DEST in ${URL} ; do
         LINK="${DEST}/${HOST_NAME}"
-        IPv6_OLD="$(curl ${LINK} 2> /dev/null)"
+        IPv6_OLD="$(curl -L ${LINK} 2> /dev/null)"
         if [ "${IPv6_OLD}" != "${IPv6_CUR}" ]; then
-            curl "${LINK}?update=${IPv6_CUR}" &> /dev/null
+            curl -L "${LINK}?update=${IPv6_CUR}" &> /dev/null
         fi
     done
 fi
