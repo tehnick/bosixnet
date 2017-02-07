@@ -1,5 +1,6 @@
 [Unit]
 Description=BOSixNet server
+Documentation=man:bosixnet_webui(1)
 After=network.target
 
 [Service]
