@@ -1,4 +1,4 @@
---- 1.9 2017-xx-xx ---
+--- 1.9 2017-02-08 ---
 *** common ***
 * Disable WITH_SYSVINIT_SUPPORT configuration option by default.
 *** bosixnet-daemon ***
