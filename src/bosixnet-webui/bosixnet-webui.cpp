@@ -344,7 +344,11 @@ void write_file(const string &file_name, const map<string, string> &map_name)
 {
     struct stat info;
     if (stat(log_dir.c_str(), &info)) {
+#if defined(_WIN32)
+        if (mkdir(log_dir.c_str())) {
+#else
         if (mkdir(log_dir.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)) {
+#endif
             cout << "Directory " << log_dir << " was not created!\n";
             return;
         }
