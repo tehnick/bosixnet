@@ -15,7 +15,8 @@ URL="http://ipv6.example.com/bosixnet"
 
 # Protect file with list of hosts from simultaneous editing
 SCRIPT_NAME="$(basename ${0})"
-if [ ! -z "$(pidof -o %PPID -x ${SCRIPT_NAME})" ]; then
+PROCESS_ID="$(pidof -x ${SCRIPT_NAME})"
+if [ "$(echo ${PROCESS_ID} | tr ' ' '\n' | wc -l)" != "1" ]; then
     echo "Another instance of ${SCRIPT_NAME} script is already running."
     echo "Please wait until it is finished and try again."
     exit 1
@@ -47,6 +48,7 @@ if [ -z "${CUR_INFO}" ]; then
 fi
 
 cp -f "${HOSTS}" "${HOSTS}.backup"
-cat "${HOSTS}.backup" | grep -v '^....:.*:.*:.*' | tee "${HOSTS}" > /dev/null
-echo "${CUR_INFO}" | tee -a "${HOSTS}" > /dev/null
+cat "${HOSTS}.backup" | grep -v '^....:.*:.*:.*' | tee "${HOSTS}.new" > /dev/null
+echo "${CUR_INFO}" | tee -a "${HOSTS}.new" > /dev/null
+cp -f "${HOSTS}.new" "${HOSTS}"
 
