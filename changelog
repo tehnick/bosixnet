@@ -2,6 +2,9 @@
 *** bosixnet-daemon ***
 * Fix update_hosts script after changing of behaviuor of `pidof` command line
   tool.
+*** bosixnet-webui ***
+* Fix cross-compilation for MS Windows using MinGW and MXE (https://mxe.cc/).
+  This is just for fun. MS Windows is still not supported in this project.
 
 --- 1.9 2017-02-08 ---
 *** common ***
