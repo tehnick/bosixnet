@@ -2,6 +2,10 @@
 *** bosixnet-daemon ***
 * Fix update_hosts script after changing of behaviuor of `pidof` command line
   tool.
+* Add check of ADDRESS_SUB_STRING environment variable in update_address script
+  (see config file for usage details). This variable may be useful when your
+  network device has few registered IPv6 addresses. For example, see:
+  https://en.wikipedia.org/wiki/Unique_local_address
 *** bosixnet-webui ***
 * Fix cross-compilation for MS Windows using MinGW and MXE (https://mxe.cc/).
   This is just for fun. MS Windows is still not supported in this project.
