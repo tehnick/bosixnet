@@ -1,4 +1,4 @@
---- 2.0 2018-11-xx ---
+--- 2.0 2018-11-28 ---
 *** bosixnet-daemon ***
 * Fix update_hosts script after changing of behaviuor of `pidof` command line
   tool.
