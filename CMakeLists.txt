@@ -2,9 +2,9 @@ project (bosixnet)
 cmake_minimum_required (VERSION 2.8)
 
 set (PROJECT_NAME "BOSixNet")
-set (VERSION "1.7")
+set (VERSION "2.0")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 
 option (WITH_SYSVINIT_SUPPORT "Install sysvinit scripts" OFF)
 option (WITH_SYSTEMD_SUPPORT "Install systemd unit configuration files" ON)
