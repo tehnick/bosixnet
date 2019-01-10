@@ -1,6 +1,6 @@
 /*****************************************************************************
  *                                                                           *
- *  Copyright (c) 2013-2017 Boris Pek <tehnick-8@yandex.ru>                  *
+ *  Copyright (c) 2013-2019 Boris Pek <tehnick-8@yandex.ru>                  *
  *                                                                           *
  *  Permission is hereby granted, free of charge, to any person obtaining    *
  *  a copy of this software and associated documentation files (the          *
