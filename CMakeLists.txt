@@ -6,15 +6,7 @@ set (VERSION "2.0")
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 
-option (WITH_SYSVINIT_SUPPORT "Install sysvinit scripts" OFF)
 option (WITH_SYSTEMD_SUPPORT "Install systemd unit configuration files" ON)
-
-if (WITH_SYSVINIT_SUPPORT)
-    if (NOT SYSVINIT_SCRIPTS_DIR)
-        set (SYSVINIT_SCRIPTS_DIR "/etc/init.d/")
-    endif (NOT SYSVINIT_SCRIPTS_DIR)
-    message (STATUS "SysVinit scripts will be installed to: ${SYSVINIT_SCRIPTS_DIR}")
-endif (WITH_SYSVINIT_SUPPORT)
 
 if (WITH_SYSTEMD_SUPPORT)
     if (NOT SYSTEMD_UNIT_FILES_DIR)

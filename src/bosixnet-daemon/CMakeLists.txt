@@ -17,12 +17,6 @@ install (FILES bosixnet-daemon.conf
 install (FILES ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.1.gz
          DESTINATION "${CMAKE_INSTALL_PREFIX}/share/man/man1")
 
-if (WITH_SYSVINIT_SUPPORT)
-    install (FILES bosixnet-daemon
-             DESTINATION "${SYSVINIT_SCRIPTS_DIR}"
-             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-endif (WITH_SYSVINIT_SUPPORT)
-
 if (WITH_SYSTEMD_SUPPORT)
     install (FILES bosixnet-daemon.service
              DESTINATION "${SYSTEMD_UNIT_FILES_DIR}"

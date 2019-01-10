@@ -30,8 +30,6 @@ sudo make install
 
 *** Extra build options ***
 -DCMAKE_BUILD_TYPE={Release, RelWithDebInfo, Debug, MinRelSize}
--DWITH_SYSVINIT_SUPPORT={ON, OFF} (default: OFF)
--DSYSVINIT_SCRIPTS_DIR={...} (default: /etc/init.d/)
 -DWITH_SYSTEMD_SUPPORT={ON, OFF} (default: ON)
 -DSYSTEMD_UNIT_FILES_DIR={...} (default: /lib/systemd/system/)
 

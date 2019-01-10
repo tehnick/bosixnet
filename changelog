@@ -1,3 +1,8 @@
+--- 2.1 2019-xx-xx ---
+*** common ***
+* Delete all SysVinit scripts.
+* Delete WITH_SYSVINIT_SUPPORT and SYSVINIT_SCRIPTS_DIR configuration options.
+
 --- 2.0 2018-11-28 ---
 *** bosixnet-daemon ***
 * Fix update_hosts script after changing of behaviuor of `pidof` command line
